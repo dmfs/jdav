@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="libs/xml-serializer-0.1.2.jar"/>
+	<classpathentry kind="lib" path="/home/marten/workspace/libraries/xml-object-pull/src"/>
+	<classpathentry kind="lib" path="libs/kxml2-2.3.0.jar"/>
+	<classpathentry kind="lib" path="libs/xmlobjects-0.2.2.jar"/>
+	<classpathentry kind="lib" path="libs/http-client-interfaces-v0.9.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
