@@ -17,7 +17,7 @@
  * USA
  */
 
-package org.dmfs.dav.rfc5379;
+package org.dmfs.dav.rfc5397;
 
 import java.io.IOException;
 import java.net.URI;
