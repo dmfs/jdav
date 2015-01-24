@@ -156,16 +156,42 @@ public class PropFind extends PropertyRequest
 
 
 	/**
+	 * Return whether this is an allprop request or not.
+	 * 
+	 * @return <code>true</code> if this request is an allprop request, <code>false</code> otherwise.
+	 * 
+	 * @see #setAllProp(boolean);
+	 */
+	public boolean getAllProp()
+	{
+		return mAllProp;
+	}
+
+
+	/**
 	 * Specifies that only a list of property names on the resource is to be returned. The default is <code>false</code>.
 	 * 
-	 * @param propNames
+	 * @param propName
 	 *            <code>true</code> to request the list of property names only, <code>false</code> to request property values too.
 	 * @return This instance.
 	 */
-	public PropFind setPropName(boolean propNames)
+	public PropFind setPropName(boolean propName)
 	{
-		mPropName = propNames;
+		mPropName = propName;
 		return this;
+	}
+
+
+	/**
+	 * Return whether this is a propname request or not.
+	 * 
+	 * @return <code>true</code> if this request is a propname request, <code>false</code> otherwise.
+	 * 
+	 * @see #setPropName(boolean)
+	 */
+	public boolean getPropName()
+	{
+		return mPropName;
 	}
 
 
