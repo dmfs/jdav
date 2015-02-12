@@ -102,13 +102,13 @@ public final class SyncCollection extends PropertyRequest
 		public void writeChildren(ElementDescriptor<SyncCollection> descriptor, SyncCollection object, IXmlChildWriter childWriter, SerializerContext context)
 			throws SerializerException, IOException
 		{
-			childWriter.writeChild(WebDavSync.SYNC_TOKEN, object.mSyncToken);
-			childWriter.writeChild(WebDavSync.SYNC_LEVEL, object.mSyncLevel);
+			childWriter.writeChild(WebDavSync.SYNC_TOKEN, object.mSyncToken, context);
+			childWriter.writeChild(WebDavSync.SYNC_LEVEL, object.mSyncLevel, context);
 			if (object.mLimit != null && object.mLimit.size() > 0)
 			{
-				childWriter.writeChild(WebDavSearch.LIMIT, object.mLimit);
+				childWriter.writeChild(WebDavSearch.LIMIT, object.mLimit, context);
 			}
-			childWriter.writeChild(WebDav.PROP, object.mProp);
+			childWriter.writeChild(WebDav.PROP, object.mProp, context);
 		};
 	};
 

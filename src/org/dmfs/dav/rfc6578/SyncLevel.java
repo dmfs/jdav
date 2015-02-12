@@ -87,7 +87,7 @@ public enum SyncLevel
 		public void writeChildren(ElementDescriptor<SyncLevel> descriptor, SyncLevel object, IXmlChildWriter childWriter, SerializerContext context)
 			throws SerializerException, IOException
 		{
-			childWriter.writeText(object.toString());
+			childWriter.writeText(object.toString(), context);
 		};
 	};
 

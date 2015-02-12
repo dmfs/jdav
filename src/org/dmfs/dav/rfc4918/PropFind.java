@@ -109,19 +109,19 @@ public class PropFind extends PropertyRequest
 		{
 			if (object.mPropName)
 			{
-				childWriter.writeChild(WebDav.PROPNAME, null);
+				childWriter.writeChild(WebDav.PROPNAME, null, context);
 			}
 			else if (object.mAllProp)
 			{
-				childWriter.writeChild(WebDav.ALLPROP, null);
+				childWriter.writeChild(WebDav.ALLPROP, null, context);
 				if (object.mProp != null && object.mProp.size() > 0)
 				{
-					childWriter.writeChild(WebDav.INCLUDE, object.mProp);
+					childWriter.writeChild(WebDav.INCLUDE, object.mProp, context);
 				}
 			}
 			else
 			{
-				childWriter.writeChild(WebDav.PROP, object.mProp);
+				childWriter.writeChild(WebDav.PROP, object.mProp, context);
 			}
 		};
 	};

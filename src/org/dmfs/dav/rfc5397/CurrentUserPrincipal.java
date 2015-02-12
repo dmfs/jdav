@@ -117,7 +117,7 @@ public final class CurrentUserPrincipal
 				if (WebDavAcl.PRINCIPAL_UNAUTHENTICATED.equals(object))
 				{
 					// don't write href element if the URI equals the unauthenticated pseudo principal
-					childWriter.writeChild(WebDavAcl.UNAUTHENTICATED, object);
+					childWriter.writeChild(WebDavAcl.UNAUTHENTICATED, object, context);
 				}
 				else
 				{

@@ -121,18 +121,18 @@ public class PropStat implements Recyclable
 			throws SerializerException, IOException
 		{
 			// the prop element is mandatory, but it may be empty
-			childWriter.writeChild(WebDav.PROP, object.mProperties);
+			childWriter.writeChild(WebDav.PROP, object.mProperties, context);
 
-			childWriter.writeChild(WebDav.STATUS, object.mStatus);
+			childWriter.writeChild(WebDav.STATUS, object.mStatus, context);
 
 			if (object.mError != null)
 			{
-				childWriter.writeChild(WebDav.ERROR, object.mError);
+				childWriter.writeChild(WebDav.ERROR, object.mError, context);
 			}
 
 			if (object.mResponseDescription != null)
 			{
-				childWriter.writeChild(WebDav.RESPONSEDESCRIPTION, object.mResponseDescription);
+				childWriter.writeChild(WebDav.RESPONSEDESCRIPTION, object.mResponseDescription, context);
 			}
 		};
 	};

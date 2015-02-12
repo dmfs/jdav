@@ -93,7 +93,7 @@ public enum Depth
 		public void writeChildren(ElementDescriptor<Depth> descriptor, Depth object, IXmlChildWriter childWriter, SerializerContext context)
 			throws SerializerException, IOException
 		{
-			childWriter.writeText(object.toString());
+			childWriter.writeText(object.toString(), context);
 		};
 	};
 

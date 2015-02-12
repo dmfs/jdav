@@ -72,14 +72,14 @@ public final class TextMatch extends CardDavFilter
 			public void writeAttributes(ElementDescriptor<TextMatch> descriptor, TextMatch object, IXmlAttributeWriter attributeWriter,
 				SerializerContext context) throws SerializerException, IOException
 			{
-				attributeWriter.writeAttribute(ATTRIBUTE_NEGATE_CONDITION, object.negate ? "yes" : "no");
+				attributeWriter.writeAttribute(ATTRIBUTE_NEGATE_CONDITION, object.negate ? "yes" : "no", context);
 
 				if (object.collation != null)
 				{
-					attributeWriter.writeAttribute(ATTRIBUTE_COLLATION, object.collation);
+					attributeWriter.writeAttribute(ATTRIBUTE_COLLATION, object.collation, context);
 				}
 
-				attributeWriter.writeAttribute(ATTRIBUTE_MATCH_TYPE, object.matchType.toString());
+				attributeWriter.writeAttribute(ATTRIBUTE_MATCH_TYPE, object.matchType.toString(), context);
 			};
 
 
@@ -87,7 +87,7 @@ public final class TextMatch extends CardDavFilter
 			public void writeChildren(ElementDescriptor<TextMatch> descriptor, TextMatch object, IXmlChildWriter childWriter, SerializerContext context)
 				throws SerializerException, IOException
 			{
-				childWriter.writeText(object.value);
+				childWriter.writeText(object.value, context);
 			};
 		});
 

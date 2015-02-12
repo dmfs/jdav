@@ -72,18 +72,18 @@ public class CalendarQuery extends PropertyRequest
 		{
 			if (object.mPropName)
 			{
-				childWriter.writeChild(WebDav.PROPNAME, null);
+				childWriter.writeChild(WebDav.PROPNAME, null, context);
 			}
 			else if (object.mAllProp)
 			{
-				childWriter.writeChild(WebDav.ALLPROP, null);
+				childWriter.writeChild(WebDav.ALLPROP, null, context);
 			}
 			else
 			{
-				childWriter.writeChild(WebDav.PROP, object.mProp);
+				childWriter.writeChild(WebDav.PROP, object.mProp, context);
 			}
 
-			childWriter.writeChild(CalDav.FILTER, object.mFilter);
+			childWriter.writeChild(CalDav.FILTER, object.mFilter, context);
 
 			// TODO: add timezone
 		};

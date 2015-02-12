@@ -124,32 +124,32 @@ public class Response implements Recyclable
 			{
 				for (URI href : object.mHrefs)
 				{
-					childWriter.writeChild(WebDav.HREF, href);
+					childWriter.writeChild(WebDav.HREF, href, context);
 				}
-				childWriter.writeChild(WebDav.STATUS, object.mStatus);
+				childWriter.writeChild(WebDav.STATUS, object.mStatus, context);
 			}
 			else
 			{
-				childWriter.writeChild(WebDav.HREF, object.mHrefs.get(0));
+				childWriter.writeChild(WebDav.HREF, object.mHrefs.get(0), context);
 				for (PropStat propstat : object.mPropStatByStatus.values())
 				{
-					childWriter.writeChild(WebDav.PROPSTAT, propstat);
+					childWriter.writeChild(WebDav.PROPSTAT, propstat, context);
 				}
 			}
 
 			if (object.mError != null)
 			{
-				childWriter.writeChild(WebDav.ERROR, object.mError);
+				childWriter.writeChild(WebDav.ERROR, object.mError, context);
 			}
 
 			if (object.mResponseDescription != null)
 			{
-				childWriter.writeChild(WebDav.RESPONSEDESCRIPTION, object.mResponseDescription);
+				childWriter.writeChild(WebDav.RESPONSEDESCRIPTION, object.mResponseDescription, context);
 			}
 
 			if (object.mLocation != null)
 			{
-				childWriter.writeChild(WebDav.LOCATION, object.mLocation);
+				childWriter.writeChild(WebDav.LOCATION, object.mLocation, context);
 			}
 		};
 

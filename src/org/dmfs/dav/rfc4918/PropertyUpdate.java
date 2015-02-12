@@ -111,11 +111,11 @@ public class PropertyUpdate implements Recyclable
 		{
 			if (object.mSet != null && object.mSet.size() > 0)
 			{
-				childWriter.writeChild(WebDav.SET, object.mSet);
+				childWriter.writeChild(WebDav.SET, object.mSet, context);
 			}
 			if (object.mRemove != null && object.mRemove.size() > 0)
 			{
-				childWriter.writeChild(WebDav.REMOVE, object.mRemove);
+				childWriter.writeChild(WebDav.REMOVE, object.mRemove, context);
 			}
 		};
 	};

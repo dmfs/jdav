@@ -53,11 +53,11 @@ public final class TextMatch extends CalDavFilter
 			public void writeAttributes(ElementDescriptor<TextMatch> descriptor, TextMatch object, IXmlAttributeWriter attributeWriter,
 				SerializerContext context) throws SerializerException, IOException
 			{
-				attributeWriter.writeAttribute(ATTRIBUTE_NEGATE_CONDITION, object.negate ? "yes" : "no");
+				attributeWriter.writeAttribute(ATTRIBUTE_NEGATE_CONDITION, object.negate ? "yes" : "no", context);
 
 				if (object.collation != null)
 				{
-					attributeWriter.writeAttribute(ATTRIBUTE_COLLATION, object.collation);
+					attributeWriter.writeAttribute(ATTRIBUTE_COLLATION, object.collation, context);
 				}
 			};
 
@@ -66,7 +66,7 @@ public final class TextMatch extends CalDavFilter
 			public void writeChildren(ElementDescriptor<TextMatch> descriptor, TextMatch object, IXmlChildWriter childWriter, SerializerContext context)
 				throws SerializerException, IOException
 			{
-				childWriter.writeText(object.value);
+				childWriter.writeText(object.value, context);
 			};
 		});
 

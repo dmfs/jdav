@@ -53,12 +53,12 @@ public final class TimeRange extends CalDavFilter
 				if (object.start != Long.MIN_VALUE)
 				{
 					// FIXME: this is wrong and only for testing
-					attributeWriter.writeAttribute(ATTRIBUTE_START, String.valueOf(object.start));
+					attributeWriter.writeAttribute(ATTRIBUTE_START, String.valueOf(object.start), context);
 				}
 				if (object.end != Long.MAX_VALUE)
 				{
 					// FIXME: this is wrong and only for testing
-					attributeWriter.writeAttribute(ATTRIBUTE_END, String.valueOf(object.end));
+					attributeWriter.writeAttribute(ATTRIBUTE_END, String.valueOf(object.end), context);
 				}
 			};
 		});

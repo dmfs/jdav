@@ -118,16 +118,16 @@ public class MultiStatus implements Recyclable
 				Iterator<Response> iterator = object.mResponses.iterator();
 				while (iterator.hasNext())
 				{
-					childWriter.writeChild(WebDav.RESPONSE, iterator.next());
+					childWriter.writeChild(WebDav.RESPONSE, iterator.next(), context);
 				}
 			}
 			if (object.mResponseDescription != null)
 			{
-				childWriter.writeChild(WebDav.RESPONSEDESCRIPTION, object.mResponseDescription);
+				childWriter.writeChild(WebDav.RESPONSEDESCRIPTION, object.mResponseDescription, context);
 			}
 			if (object.mSyncToken != null)
 			{
-				childWriter.writeChild(WebDavSync.SYNC_TOKEN, object.mSyncToken);
+				childWriter.writeChild(WebDavSync.SYNC_TOKEN, object.mSyncToken, context);
 			}
 		};
 	};

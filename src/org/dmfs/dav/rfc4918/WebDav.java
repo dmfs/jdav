@@ -250,7 +250,7 @@ public final class WebDav
 			public void writeChildren(ElementDescriptor<Integer> descriptor, Integer object, IXmlChildWriter childWriter, SerializerContext context)
 				throws SerializerException, IOException
 			{
-				childWriter.writeText(HttpStatus.getStatusLine(object));
+				childWriter.writeText(HttpStatus.getStatusLine(object), context);
 			};
 		});
 
@@ -358,7 +358,7 @@ public final class WebDav
 				{
 					if (object != null)
 					{
-						childWriter.writeText(object.toString());
+						childWriter.writeText(object.toString(), context);
 					}
 				};
 			});

@@ -47,7 +47,7 @@ public final class ParamFilter extends CardDavFilter
 			public void writeAttributes(ElementDescriptor<ParamFilter> descriptor, ParamFilter object, IXmlAttributeWriter attributeWriter,
 				SerializerContext context) throws SerializerException, IOException
 			{
-				attributeWriter.writeAttribute(ATTRIBUTE_NAME, object.name);
+				attributeWriter.writeAttribute(ATTRIBUTE_NAME, object.name, context);
 			};
 
 
@@ -57,11 +57,11 @@ public final class ParamFilter extends CardDavFilter
 			{
 				if (object.isNotDefined)
 				{
-					childWriter.writeChild(FILTER_ISNOTDEFINED, null);
+					childWriter.writeChild(FILTER_ISNOTDEFINED, null, context);
 				}
 				else if (object.textMatch != null)
 				{
-					childWriter.writeChild(TextMatch.DESCRIPTOR, object.textMatch);
+					childWriter.writeChild(TextMatch.DESCRIPTOR, object.textMatch, context);
 				}
 			};
 		});

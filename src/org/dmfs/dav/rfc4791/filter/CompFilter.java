@@ -51,7 +51,7 @@ public final class CompFilter extends StructuredFilter
 			public void writeAttributes(ElementDescriptor<CompFilter> descriptor, CompFilter object, IXmlAttributeWriter attributeWriter,
 				SerializerContext context) throws SerializerException, IOException
 			{
-				attributeWriter.writeAttribute(ATTRIBUTE_NAME, object.name);
+				attributeWriter.writeAttribute(ATTRIBUTE_NAME, object.name, context);
 			};
 
 
@@ -62,19 +62,19 @@ public final class CompFilter extends StructuredFilter
 			{
 				if (object.isNotDefined)
 				{
-					childWriter.writeChild(FILTER_ISNOTDEFINED, null);
+					childWriter.writeChild(FILTER_ISNOTDEFINED, null, context);
 				}
 				else
 				{
 					if (object.timeRange != null)
 					{
-						childWriter.writeChild(TimeRange.DESCRIPTOR, object.timeRange);
+						childWriter.writeChild(TimeRange.DESCRIPTOR, object.timeRange, context);
 					}
 					if (object.filters != null)
 					{
 						for (StructuredFilter filter : object.filters)
 						{
-							childWriter.writeChild((ElementDescriptor<StructuredFilter>) filter.getElementDescriptor(), filter);
+							childWriter.writeChild((ElementDescriptor<StructuredFilter>) filter.getElementDescriptor(), filter, context);
 						}
 					}
 				}

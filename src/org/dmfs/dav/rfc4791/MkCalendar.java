@@ -71,7 +71,7 @@ public class MkCalendar
 		{
 			if (object.mSet != null && object.mSet.size() > 0)
 			{
-				childWriter.writeChild(WebDav.SET, object.mSet);
+				childWriter.writeChild(WebDav.SET, object.mSet, context);
 			}
 		};
 	};

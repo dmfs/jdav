@@ -47,7 +47,7 @@ public final class PropFilter extends StructuredFilter
 			public void writeAttributes(ElementDescriptor<PropFilter> descriptor, PropFilter object, IXmlAttributeWriter attributeWriter,
 				SerializerContext context) throws SerializerException, IOException
 			{
-				attributeWriter.writeAttribute(ATTRIBUTE_NAME, object.name);
+				attributeWriter.writeAttribute(ATTRIBUTE_NAME, object.name, context);
 			};
 
 
@@ -58,17 +58,17 @@ public final class PropFilter extends StructuredFilter
 			{
 				if (object.isNotDefined)
 				{
-					childWriter.writeChild(FILTER_ISNOTDEFINED, null);
+					childWriter.writeChild(FILTER_ISNOTDEFINED, null, context);
 				}
 				else
 				{
 					if (object.timeRange != null)
 					{
-						childWriter.writeChild(TimeRange.DESCRIPTOR, object.timeRange);
+						childWriter.writeChild(TimeRange.DESCRIPTOR, object.timeRange, context);
 					}
 					else if (object.textMatch != null)
 					{
-						childWriter.writeChild(TextMatch.DESCRIPTOR, object.textMatch);
+						childWriter.writeChild(TextMatch.DESCRIPTOR, object.textMatch, context);
 					}
 
 					if (object.filters != null)

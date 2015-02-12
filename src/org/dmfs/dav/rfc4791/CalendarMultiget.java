@@ -61,20 +61,20 @@ public class CalendarMultiget extends PropertyRequest
 		{
 			if (object.mPropName)
 			{
-				childWriter.writeChild(WebDav.PROPNAME, null);
+				childWriter.writeChild(WebDav.PROPNAME, null, context);
 			}
 			else if (object.mAllProp)
 			{
-				childWriter.writeChild(WebDav.ALLPROP, null);
+				childWriter.writeChild(WebDav.ALLPROP, null, context);
 			}
 			else
 			{
-				childWriter.writeChild(WebDav.PROP, object.mProp);
+				childWriter.writeChild(WebDav.PROP, object.mProp, context);
 			}
 
 			for (URI uri : object.mUris)
 			{
-				childWriter.writeChild(WebDav.HREF, uri);
+				childWriter.writeChild(WebDav.HREF, uri, context);
 			}
 
 		};
