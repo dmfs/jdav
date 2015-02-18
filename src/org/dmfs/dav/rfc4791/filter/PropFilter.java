@@ -75,7 +75,7 @@ public final class PropFilter extends StructuredFilter
 					{
 						for (ParamFilter filter : object.filters)
 						{
-							childWriter.writeChild((ElementDescriptor<ParamFilter>) filter.getElementDescriptor(), filter);
+							childWriter.writeChild((ElementDescriptor<ParamFilter>) filter.getElementDescriptor(), filter, context);
 						}
 					}
 				}
