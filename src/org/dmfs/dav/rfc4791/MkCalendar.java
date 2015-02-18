@@ -28,6 +28,9 @@ import org.dmfs.dav.rfc4918.WebDav;
 import org.dmfs.xmlobjects.ElementDescriptor;
 import org.dmfs.xmlobjects.builder.AbstractObjectBuilder;
 import org.dmfs.xmlobjects.builder.IObjectBuilder;
+import org.dmfs.xmlobjects.pull.ParserContext;
+import org.dmfs.xmlobjects.pull.Recyclable;
+import org.dmfs.xmlobjects.pull.XmlObjectPullParserException;
 import org.dmfs.xmlobjects.serializer.SerializerContext;
 import org.dmfs.xmlobjects.serializer.SerializerException;
 import org.dmfs.xmlobjects.serializer.XmlObjectSerializer.IXmlChildWriter;
@@ -57,14 +60,51 @@ import org.dmfs.xmlobjects.serializer.XmlObjectSerializer.IXmlChildWriter;
  * 
  * @author Marten Gajda <marten@dmfs.org>
  */
-public class MkCalendar
+public class MkCalendar implements Recyclable
 {
 
 	/**
-	 * An {@link IObjectBuilder} to serialize {@link PropertyUpdate} objects.
+	 * An {@link IObjectBuilder} to serialize and build {@link PropertyUpdate} objects.
 	 */
 	public final static IObjectBuilder<MkCalendar> BUILDER = new AbstractObjectBuilder<MkCalendar>()
 	{
+		@Override
+		public MkCalendar get(ElementDescriptor<MkCalendar> descriptor, MkCalendar recycle, org.dmfs.xmlobjects.pull.ParserContext context)
+			throws XmlObjectPullParserException
+		{
+			if (recycle != null)
+			{
+				recycle.recycle();
+				return recycle;
+			}
+
+			return new MkCalendar();
+		};
+
+
+		@Override
+		public <V extends Object> MkCalendar update(ElementDescriptor<MkCalendar> descriptor, MkCalendar object, ElementDescriptor<V> childDescriptor, V child,
+			ParserContext context) throws XmlObjectPullParserException
+		{
+			if (childDescriptor == WebDav.SET)
+			{
+				@SuppressWarnings("unchecked")
+				Map<ElementDescriptor<?>, Object> set = (Map<ElementDescriptor<?>, Object>) child;
+				if (object.mSet == null)
+				{
+					object.mSet = set;
+				}
+				else
+				{
+
+					object.mSet.putAll(set);
+					context.recycle(WebDav.SET, set);
+				}
+			}
+			return object;
+		};
+
+
 		@Override
 		public void writeChildren(ElementDescriptor<MkCalendar> descriptor, MkCalendar object, IXmlChildWriter childWriter, SerializerContext context)
 			throws SerializerException, IOException
@@ -111,6 +151,16 @@ public class MkCalendar
 		if (mSet != null)
 		{
 			mSet.remove(property);
+		}
+	}
+
+
+	@Override
+	public void recycle()
+	{
+		if (mSet != null)
+		{
+			mSet.clear();
 		}
 	}
 
