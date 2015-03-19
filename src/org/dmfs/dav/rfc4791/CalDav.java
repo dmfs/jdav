@@ -146,13 +146,13 @@ public class CalDav
 			StringObjectBuilder.INSTANCE);
 
 		public final static ElementDescriptor<Set<String>> SUPPORTED_CALENDAR_COMPONENT_SET = ElementDescriptor.register(
-			QualifiedName.get(NAMESPACE, "supported-calendar-component-set"), new SetObjectBuilder<String>(COMP));
+			QualifiedName.get(NAMESPACE, "supported-calendar-component-set"), new SetObjectBuilder<String>(COMP, false /* don't store null values */));
 
 		public final static ElementDescriptor<CalendarData> CALENDAR_DATA = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "calendar-data"),
 			CalendarData.BUILDER);
 
 		public final static ElementDescriptor<Set<CalendarData>> SUPPORTED_CALENDAR_DATA = ElementDescriptor.register(
-			QualifiedName.get(NAMESPACE, "supported-calendar-data"), new SetObjectBuilder<CalendarData>(CALENDAR_DATA));
+			QualifiedName.get(NAMESPACE, "supported-calendar-data"), new SetObjectBuilder<CalendarData>(CALENDAR_DATA, false /* don't store null values */));
 
 		public final static ElementDescriptor<Integer> MAX_RESOURCE_SIZE = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "max-resource-size"),
 			IntegerObjectBuilder.INSTANCE_STRICT);

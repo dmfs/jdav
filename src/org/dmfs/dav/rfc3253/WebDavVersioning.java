@@ -75,7 +75,7 @@ public final class WebDavVersioning
 		 * <code>DAV:supported-report-set</code> as defined in <a href="http://tools.ietf.org/html/rfc3253#section-3.1.5">RFC 3253, section 3.1.5</a>
 		 */
 		public final static ElementDescriptor<Set<QualifiedName>> SUPPORTED_REPORT_SET = ElementDescriptor.register(
-			QualifiedName.get(NAMESPACE, "supported-report-set"), new SetObjectBuilder<QualifiedName>(SUPPORTED_REPORT));
+			QualifiedName.get(NAMESPACE, "supported-report-set"), new SetObjectBuilder<QualifiedName>(SUPPORTED_REPORT, false /* don't store null values */));
 
 
 		/**
