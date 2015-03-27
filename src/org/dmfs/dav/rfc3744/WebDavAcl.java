@@ -51,14 +51,94 @@ public final class WebDavAcl
 	 */
 	public final static String NAMESPACE = WebDav.NAMESPACE;
 
-	public final static ElementDescriptor<QualifiedName> READ = ElementDescriptor.register(Privileges.READ, QualifiedNameObjectBuilder.INSTANCE);
-
 	/**
 	 * principal as defined in <a href="http://tools.ietf.org/html/rfc3744#section-4">RFC 3744, section 4</a> and <a
 	 * href="http://tools.ietf.org/html/rfc3744#appendix-A">RFC 3744, appendix A</a>. It accepts any element and stores the {@link QualifiedName}.
 	 */
-	public final static ElementDescriptor<QualifiedName> PRINCIPAL = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "principal"),
+	public final static ElementDescriptor<QualifiedName> PRINCIPAL = ElementDescriptor.register(ResourceTypes.PRINCIPAL,
 		new TransientObjectBuilder<QualifiedName>(QualifiedNameObjectBuilder.INSTANCE));
+
+	/**
+	 * Defines new resource types introduced in <a href="http://tools.ietf.org/html/rfc3744#section-5.4">RFC 3744, section 5.4</a>.
+	 */
+	public final static class ResourceTypes
+	{
+		/**
+		 * {@link QualifiedName} of the principal resource-type.
+		 */
+		public final static QualifiedName PRINCIPAL = QualifiedName.get(NAMESPACE, "principal");
+
+	}
+
+	/* --------------------------------------------- Principal elements --------------------------------------------- */
+
+	public final static ElementDescriptor<URI> PRINCIPAL_ALL = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "all"), new AbstractObjectBuilder<URI>()
+	{
+		public URI get(ElementDescriptor<URI> descriptor, URI recycle, ParserContext context) throws XmlObjectPullParserException
+		{
+			return PSEUDO_PRINCIPAL_ALL;
+		};
+	});
+
+	public final static ElementDescriptor<URI> PRINCIPAL_AUTHENTICATED = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "authenticated"),
+		new AbstractObjectBuilder<URI>()
+		{
+			public URI get(ElementDescriptor<URI> descriptor, URI recycle, ParserContext context) throws XmlObjectPullParserException
+			{
+				return PSEUDO_PRINCIPAL_AUTHENTICATED;
+			};
+		});
+
+	public final static ElementDescriptor<URI> PRINCIPAL_UNAUTHENTICATED = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "unauthenticated"),
+		new AbstractObjectBuilder<URI>()
+		{
+			public URI get(ElementDescriptor<URI> descriptor, URI recycle, ParserContext context) throws XmlObjectPullParserException
+			{
+				return PSEUDO_PRINCIPAL_UNAUTHENTICATED;
+			};
+		});
+
+	public final static ElementDescriptor<URI> PRINCIPAL_SELF = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "self"),
+		new AbstractObjectBuilder<URI>()
+		{
+			public URI get(ElementDescriptor<URI> descriptor, URI recycle, ParserContext context) throws XmlObjectPullParserException
+			{
+				return PSEUDO_PRINCIPAL_ALL;
+			};
+		});
+
+	/**
+	 * This is the pseudo principal <code>all</code>. The actual value of this is not of any relevance and should not be used.
+	 */
+	public final static URI PSEUDO_PRINCIPAL_ALL = URI.create("http://dmfs.org/pseudo-principals/all");
+
+	/**
+	 * This is the pseudo principal <code>authenticated</code>. The actual value of this is not of any relevance and should not be used.
+	 */
+	public final static URI PSEUDO_PRINCIPAL_AUTHENTICATED = URI.create("http://dmfs.org/pseudo-principals/authenticated");
+
+	/**
+	 * This is the pseudo principal <code>unauthenticated</code>. The actual value of this is not of any relevance and should not be used.
+	 */
+	public final static URI PSEUDO_PRINCIPAL_UNAUTHENTICATED = URI.create("http://dmfs.org/pseudo-principals/unauthenticated");
+
+	/**
+	 * This is the pseudo principal <code>self</code>. The actual value of this is not of any relevance and should not be used.
+	 */
+	public final static URI PSEUDO_PRINCIPAL_SELF = URI.create("http://dmfs.org/pseudo-principals/self");
+
+	public final static class PseudoPrincipals
+	{
+		public final static URI ALL = WebDavAcl.PSEUDO_PRINCIPAL_ALL;
+
+		public final static URI AUTHENTICATED = WebDavAcl.PSEUDO_PRINCIPAL_AUTHENTICATED;
+
+		public final static URI UNAUTHENTICATED = WebDavAcl.PSEUDO_PRINCIPAL_UNAUTHENTICATED;
+
+		public final static URI SELF = WebDavAcl.PSEUDO_PRINCIPAL_SELF;
+	}
+
+	/* --------------------------------------------- Privilege elements --------------------------------------------- */
 
 	/**
 	 * privilege as defined in <a href="http://tools.ietf.org/html/rfc3744#section-5.4">RFC 3744, section 5.4</a> and <a
@@ -67,54 +147,62 @@ public final class WebDavAcl
 	public final static ElementDescriptor<QualifiedName> PRIVILEGE = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "privilege"),
 		new TransientObjectBuilder<QualifiedName>(QualifiedNameObjectBuilder.INSTANCE));
 
+	public final static ElementDescriptor<QualifiedName> PRIVILEGE_ALL = ElementDescriptor.registerWithParents(Privileges.ALL,
+		QualifiedNameObjectBuilder.INSTANCE, PRIVILEGE);
+
+	public final static ElementDescriptor<QualifiedName> PRIVILEGE_BIND = ElementDescriptor.registerWithParents(Privileges.BIND,
+		QualifiedNameObjectBuilder.INSTANCE, PRIVILEGE);
+
+	public final static ElementDescriptor<QualifiedName> PRIVILEGE_READ_ACL = ElementDescriptor.registerWithParents(Privileges.READ_ACL,
+		QualifiedNameObjectBuilder.INSTANCE, PRIVILEGE);
+
+	public final static ElementDescriptor<QualifiedName> PRIVILEGE_READ_CURRENT_USER_PRIVILEGE_SET = ElementDescriptor.registerWithParents(
+		Privileges.READ_CURRENT_USER_PRIVILEGE_SET, QualifiedNameObjectBuilder.INSTANCE, PRIVILEGE);
+
+	public final static ElementDescriptor<QualifiedName> PRIVILEGE_WRITE = ElementDescriptor.registerWithParents(Privileges.WRITE,
+		QualifiedNameObjectBuilder.INSTANCE, PRIVILEGE);
+
+	public final static ElementDescriptor<QualifiedName> PRIVILEGE_WRITE_ACL = ElementDescriptor.registerWithParents(Privileges.WRITE_ACL,
+		QualifiedNameObjectBuilder.INSTANCE, PRIVILEGE);
+
+	public final static ElementDescriptor<QualifiedName> PRIVILEGE_WRITE_PROPERTIES = ElementDescriptor.registerWithParents(Privileges.WRITE_PROPERTIES,
+		QualifiedNameObjectBuilder.INSTANCE, PRIVILEGE);
+
+	public final static ElementDescriptor<QualifiedName> PRIVILEGE_WRITE_CONTENT = ElementDescriptor.registerWithParents(Privileges.WRITE_CONTENT,
+		QualifiedNameObjectBuilder.INSTANCE, PRIVILEGE);
+
+	public final static ElementDescriptor<QualifiedName> PRIVILEGE_UNBIND = ElementDescriptor.registerWithParents(Privileges.UNBIND,
+		QualifiedNameObjectBuilder.INSTANCE, PRIVILEGE);
+
+	public final static ElementDescriptor<QualifiedName> PRIVILEGE_UNLOCK = ElementDescriptor.registerWithParents(Privileges.UNLOCK,
+		QualifiedNameObjectBuilder.INSTANCE, PRIVILEGE);
+
 	/**
-	 * This is the pseudo principal <code>unauthenticated</code>. Please note that this exists for simplification reasons. The actual value of this is not of
-	 * any relevance and should not be used.
+	 * Privileges defined in <a href="http://tools.ietf.org/html/rfc3744#section-3">RFC 3744, Section 3</a>.
 	 */
-	public final static URI PRINCIPAL_UNAUTHENTICATED = URI.create("http://dmfs.org/pseudo-principals/unauthenticated");
-
-	public final static ElementDescriptor<URI> UNAUTHENTICATED = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "unauthenticated"),
-		new AbstractObjectBuilder<URI>()
-		{
-			public URI get(ElementDescriptor<URI> descriptor, URI recycle, ParserContext context) throws XmlObjectPullParserException
-			{
-				return PRINCIPAL_UNAUTHENTICATED;
-			};
-		});
-
-	/**
-	 * This is the pseudo principal <code>authenticated</code>. Please note that this exists for simplification reasons. The actual value of this is not of any
-	 * relevance and should not be used.
-	 */
-	public final static URI PRINCIPAL_AUTHENTICATED = URI.create("http://dmfs.org/pseudo-principals/authenticated");
-
-	public final static ElementDescriptor<URI> AUTHENTICATED = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "authenticated"),
-		new AbstractObjectBuilder<URI>()
-		{
-			public URI get(ElementDescriptor<URI> descriptor, URI recycle, ParserContext context) throws XmlObjectPullParserException
-			{
-				return PRINCIPAL_AUTHENTICATED;
-			};
-		});
-
-	/**
-	 * This is the pseudo principal <code>all</code>. The actual value of this is not of any relevance and should not be used.
-	 */
-	public final static URI PRINCIPAL_ALL = URI.create("http://dmfs.org/pseudo-principals/all");
-
-	public final static ElementDescriptor<URI> ALL = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "all"), new AbstractObjectBuilder<URI>()
-	{
-		public URI get(ElementDescriptor<URI> descriptor, URI recycle, ParserContext context) throws XmlObjectPullParserException
-		{
-			return PRINCIPAL_ALL;
-		};
-	});
-
 	public final static class Privileges
 	{
+		public final static QualifiedName ALL = QualifiedName.get(NAMESPACE, "all");
+
+		public final static QualifiedName BIND = QualifiedName.get(NAMESPACE, "bind");
+
 		public final static QualifiedName READ = QualifiedName.get(NAMESPACE, "read");
 
-		public final static QualifiedName WRITE = WebDav.LockTypes.WRITE;
+		public final static QualifiedName READ_ACL = QualifiedName.get(NAMESPACE, "read-acl");
+
+		public final static QualifiedName READ_CURRENT_USER_PRIVILEGE_SET = QualifiedName.get(NAMESPACE, "read-current-user-privilege-set");
+
+		public final static QualifiedName WRITE = QualifiedName.get(NAMESPACE, "write");
+
+		public final static QualifiedName WRITE_ACL = QualifiedName.get(NAMESPACE, "write-acl");
+
+		public final static QualifiedName WRITE_PROPERTIES = QualifiedName.get(NAMESPACE, "write-properties");
+
+		public final static QualifiedName WRITE_CONTENT = QualifiedName.get(NAMESPACE, "write-content");
+
+		public final static QualifiedName UNBIND = QualifiedName.get(NAMESPACE, "unbind");
+
+		public final static QualifiedName UNLOCK = QualifiedName.get(NAMESPACE, "unlock");
 
 
 		/**
@@ -125,6 +213,18 @@ public final class WebDavAcl
 		}
 	}
 
+	/* --------------------------------------------- Property elements --------------------------------------------- */
+
+	final static ElementDescriptor<Set<QualifiedName>> PROP_CURRENT_USER_PRIVILEGE_SET = ElementDescriptor.register(
+		QualifiedName.get(NAMESPACE, "current-user-privilege-set"), new SetObjectBuilder<QualifiedName>(PRIVILEGE));
+
+	final static ElementDescriptor<Set<URI>> PROP_PRINCIPAL_COLLECTION_SET = ElementDescriptor.register(
+		QualifiedName.get(NAMESPACE, "principal-collection-set"), new SetObjectBuilder<URI>(WebDav.HREF));
+
+	/**
+	 * Properties defined in <a href="http://tools.ietf.org/html/rfc3744#section-4">RFC 3744, Section 4</a> and <a
+	 * href="http://tools.ietf.org/html/rfc3744#section-5">RFC 3744, Section 5</a>.
+	 */
 	public final static class Properties
 	{
 
@@ -132,15 +232,13 @@ public final class WebDavAcl
 		 * current-user-privilege-set as defined in <a href="http://tools.ietf.org/html/rfc3744#section-5.4">RFC 3744, section 5.4</a> and <a
 		 * href="http://tools.ietf.org/html/rfc3744#appendix-A">RFC 3744, appendix A</a>.
 		 */
-		public final static ElementDescriptor<Set<QualifiedName>> CURRENT_USER_PRIVILEGE_SET = ElementDescriptor.register(
-			QualifiedName.get(NAMESPACE, "current-user-privilege-set"), new SetObjectBuilder<QualifiedName>(PRIVILEGE));
+		public final static ElementDescriptor<Set<QualifiedName>> CURRENT_USER_PRIVILEGE_SET = WebDavAcl.PROP_CURRENT_USER_PRIVILEGE_SET;
 
 		/**
 		 * principal-collection-set as defined in <a href="http://tools.ietf.org/html/rfc3744#section-5.8">RFC 3744, section 5.8</a> and <a
 		 * href="http://tools.ietf.org/html/rfc3744#appendix-A">RFC 3744, appendix A</a>
 		 */
-		public final static ElementDescriptor<Set<URI>> PRINCIPAL_COLLECTION_SET = ElementDescriptor.register(
-			QualifiedName.get(NAMESPACE, "principal-collection-set"), new SetObjectBuilder<URI>(WebDav.HREF));
+		public final static ElementDescriptor<Set<URI>> PRINCIPAL_COLLECTION_SET = WebDavAcl.PROP_PRINCIPAL_COLLECTION_SET;
 
 
 		/**
