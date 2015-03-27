@@ -67,7 +67,7 @@ public enum SyncLevel
 	/**
 	 * An {@link IObjectBuilder} that knows how to build and serialize a {@link SyncLevel}.
 	 */
-	public final static IObjectBuilder<SyncLevel> BUILDER = new AbstractObjectBuilder<SyncLevel>()
+	final static IObjectBuilder<SyncLevel> BUILDER = new AbstractObjectBuilder<SyncLevel>()
 	{
 		public SyncLevel update(ElementDescriptor<SyncLevel> descriptor, SyncLevel object, String text, ParserContext context)
 			throws XmlObjectPullParserException

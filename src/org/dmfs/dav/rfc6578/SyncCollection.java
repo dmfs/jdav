@@ -70,7 +70,7 @@ public final class SyncCollection extends PropertyRequest
 	/**
 	 * {@link IObjectBuilder} to build and serialize {@link SyncCollection} instances.
 	 */
-	public final static IObjectBuilder<SyncCollection> BUILDER = new AbstractObjectBuilder<SyncCollection>()
+	final static IObjectBuilder<SyncCollection> BUILDER = new AbstractObjectBuilder<SyncCollection>()
 	{
 		@SuppressWarnings("unchecked")
 		@Override
