@@ -66,6 +66,11 @@ public final class WebDavVersioning
 	public final static ElementDescriptor<QualifiedName> SUPPORTED_REPORT = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "supported-report"),
 		new TransientObjectBuilder<QualifiedName>(REPORT));
 
+	/* --------------------------------------------- Property elements --------------------------------------------- */
+
+	final static ElementDescriptor<Set<QualifiedName>> PROP_SUPPORTED_REPORT_SET = ElementDescriptor.register(
+		QualifiedName.get(NAMESPACE, "supported-report-set"), new SetObjectBuilder<QualifiedName>(SUPPORTED_REPORT, false /* don't store null values */));
+
 	/**
 	 * Properties defined in <a href="http://tools.ietf.org/html/rfc3253">RFC 3253</a>.
 	 */
@@ -74,8 +79,7 @@ public final class WebDavVersioning
 		/**
 		 * <code>DAV:supported-report-set</code> as defined in <a href="http://tools.ietf.org/html/rfc3253#section-3.1.5">RFC 3253, section 3.1.5</a>
 		 */
-		public final static ElementDescriptor<Set<QualifiedName>> SUPPORTED_REPORT_SET = ElementDescriptor.register(
-			QualifiedName.get(NAMESPACE, "supported-report-set"), new SetObjectBuilder<QualifiedName>(SUPPORTED_REPORT, false /* don't store null values */));
+		public final static ElementDescriptor<Set<QualifiedName>> SUPPORTED_REPORT_SET = WebDavVersioning.PROP_SUPPORTED_REPORT_SET;
 
 
 		/**
