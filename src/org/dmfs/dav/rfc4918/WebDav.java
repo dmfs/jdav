@@ -30,7 +30,6 @@ import org.dmfs.httpclientinterfaces.HttpMethod;
 import org.dmfs.httpclientinterfaces.HttpStatus;
 import org.dmfs.xmlobjects.ElementDescriptor;
 import org.dmfs.xmlobjects.QualifiedName;
-import org.dmfs.xmlobjects.XmlContext;
 import org.dmfs.xmlobjects.builder.AbstractObjectBuilder;
 import org.dmfs.xmlobjects.builder.ElementMapObjectBuilder;
 import org.dmfs.xmlobjects.builder.IntegerObjectBuilder;
@@ -82,11 +81,6 @@ public final class WebDav
 	 * @see <a href="http://tools.ietf.org/html/rfc4918#section-9.3">RFC 4918, section 9.3</a>
 	 */
 	public final static HttpMethod METHOD_MKCOL = HttpMethod.idempotentMethod("MKCOL");
-
-	/**
-	 * A {@link XmlContext} that contains definitions that are special to requests.
-	 */
-	public final static XmlContext REQUEST_CONTEXT = new XmlContext();
 
 	/*
 	 * Names & elements defined in Section 14 of RFC 4918.
@@ -185,13 +179,12 @@ public final class WebDav
 	 * propertyupdate element as defined in <a href="http://tools.ietf.org/html/rfc4918#section-14.19">RFC 4918 Section 14.19</a>.
 	 */
 	public final static ElementDescriptor<PropertyUpdate> PROPERTYUPDATE = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "propertyupdate"),
-		PropertyUpdate.BUILDER, REQUEST_CONTEXT);
+		PropertyUpdate.BUILDER);
 
 	/**
 	 * propfind element as defined in <a href="http://tools.ietf.org/html/rfc4918#section-14.20">RFC 4918 Section 14.20</a>.
 	 */
-	public final static ElementDescriptor<PropFind> PROPFIND = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "propfind"), PropFind.BUILDER,
-		REQUEST_CONTEXT);
+	public final static ElementDescriptor<PropFind> PROPFIND = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "propfind"), PropFind.BUILDER);
 
 	/**
 	 * propname element as defined in <a href="http://tools.ietf.org/html/rfc4918#section-14.21">RFC 4918 Section 14.21</a>.

@@ -22,6 +22,7 @@ package org.dmfs.dav.rfc4791;
 import java.net.URI;
 import java.util.Set;
 
+import org.dmfs.dav.rfc3253.WebDavVersioning;
 import org.dmfs.dav.rfc4791.filter.CompFilter;
 import org.dmfs.dav.rfc4918.WebDav;
 import org.dmfs.httpclientinterfaces.HttpMethod;
@@ -50,12 +51,6 @@ public class CalDav
 	public final static HttpMethod MKCALENDAR = HttpMethod.method("MKCALENDAR");
 
 	/**
-	 * calendar element as defined in <a href="http://tools.ietf.org/html/rfc4791#section-9.1">RFC 4791, section 9.1</a>.
-	 */
-	public final static ElementDescriptor<QualifiedName> RESOURCE_CALENDAR = ElementDescriptor.register(ResourceTypes.CALENDAR,
-		QualifiedNameObjectBuilder.INSTANCE);
-
-	/**
 	 * The prop element is used to list the iCalendar properties to return in a response, see <a href="http://tools.ietf.org/html/rfc4791#section-9.6.4">RFC
 	 * 4791, section 9.6.4</a>. Since it's never returned in responses it has no builder.
 	 */
@@ -74,46 +69,30 @@ public class CalDav
 	public final static ElementDescriptor<MkCalendar> MK_CALENDAR = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "mkcalendar"), MkCalendar.BUILDER);
 
 	/**
-	 * Definition of calendar-query in the default (response) context.
+	 * Definition of calendar-query. This definition is only valid in the context of a {@link WebDavVersioning#REPORT} element.
 	 */
-	public final static ElementDescriptor<QualifiedName> CALENDAR_QUERY = ElementDescriptor.register(ReportTypes.CALENDAR_QUERY,
-		QualifiedNameObjectBuilder.INSTANCE);
+	final static ElementDescriptor<QualifiedName> REPORT_TYPE_CALENDAR_QUERY = ElementDescriptor.registerWithParents(ReportTypes.CALENDAR_QUERY,
+		QualifiedNameObjectBuilder.INSTANCE, WebDavVersioning.REPORT);
 
 	/**
 	 * Definition of the calendar-query report.
-	 * <p>
-	 * <strong>Note:</strong> to avoid conflicts with {@link #CALENDAR_QUERY} this is defined in the {@value WebDav#REQUEST_CONTEXT}-
-	 * </p>
 	 */
-	public final static ElementDescriptor<CalendarQuery> CALENDAR_QUERY_REPORT = ElementDescriptor.register(ReportTypes.CALENDAR_QUERY, CalendarQuery.BUILDER,
-		WebDav.REQUEST_CONTEXT);
+	public final static ElementDescriptor<CalendarQuery> CALENDAR_QUERY = ElementDescriptor.register(ReportTypes.CALENDAR_QUERY, CalendarQuery.BUILDER);
 
 	/**
-	 * Definition of calendar-multiget in the default (response) context.
+	 * Definition of calendar-multiget. This definition is only valid in the context of a {@link WebDavVersioning#REPORT} element.
 	 */
-	public final static ElementDescriptor<QualifiedName> CALENDAR_MULTIGET = ElementDescriptor.register(ReportTypes.CALENDAR_MULTIGET,
-		QualifiedNameObjectBuilder.INSTANCE);
+	final static ElementDescriptor<QualifiedName> REPORT_TYPE_CALENDAR_MULTIGET = ElementDescriptor.registerWithParents(ReportTypes.CALENDAR_MULTIGET,
+		QualifiedNameObjectBuilder.INSTANCE, WebDavVersioning.REPORT);
 
 	/**
 	 * Definition of the calendar-multiget report.
-	 * <p>
-	 * <strong>Note:</strong> to avoid conflicts with {@link #CALENDAR_MULTIGET} this is defined in the {@value WebDav#REQUEST_CONTEXT}-
-	 * </p>
 	 */
-	public final static ElementDescriptor<CalendarMultiget> CALENDAR_MULTIGET_REPORT = ElementDescriptor.register(ReportTypes.CALENDAR_MULTIGET,
-		CalendarMultiget.BUILDER, WebDav.REQUEST_CONTEXT);
+	public final static ElementDescriptor<CalendarMultiget> CALENDAR_MULTIGET = ElementDescriptor.register(ReportTypes.CALENDAR_MULTIGET,
+		CalendarMultiget.BUILDER);
 
 	public final static ElementDescriptor<CompFilter> FILTER = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "filter"),
 		new TransientObjectBuilder<CompFilter>(CompFilter.DESCRIPTOR));
-
-	public final static class ResourceTypes
-	{
-		/**
-		 * {@link QualifiedName} of the calendar element.
-		 */
-		public final static QualifiedName CALENDAR = QualifiedName.get(NAMESPACE, "calendar");
-
-	}
 
 	/**
 	 * Report types defined in <a href="http://tools.ietf.org/html/rfc4791#section-7">RFC 4791, Section 7</a>
@@ -134,40 +113,78 @@ public class CalDav
 	}
 
 	/**
+	 * calendar element as defined in <a href="http://tools.ietf.org/html/rfc4791#section-9.1">RFC 4791, section 9.1</a>.
+	 */
+	public final static ElementDescriptor<QualifiedName> RESOURCE_TYPE_CALENDAR = ElementDescriptor.register(ResourceTypes.CALENDAR,
+		QualifiedNameObjectBuilder.INSTANCE);
+
+	public final static class ResourceTypes
+	{
+		/**
+		 * {@link QualifiedName} of the calendar element.
+		 */
+		public final static QualifiedName CALENDAR = QualifiedName.get(NAMESPACE, "calendar");
+
+	}
+
+	public final static ElementDescriptor<String> PROPERTY_CALENDAR_DESCRIPTION = ElementDescriptor.register(
+		QualifiedName.get(NAMESPACE, "calendar-description"), StringObjectBuilder.INSTANCE);
+
+	public final static ElementDescriptor<String> PROPERTY_CALENDAR_TIMEZONE = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "calendar-timezone"),
+		StringObjectBuilder.INSTANCE);
+
+	public final static ElementDescriptor<Set<String>> PROPERTY_SUPPORTED_CALENDAR_COMPONENT_SET = ElementDescriptor.register(
+		QualifiedName.get(NAMESPACE, "supported-calendar-component-set"), new SetObjectBuilder<String>(COMP, false /* don't store null values */));
+
+	public final static ElementDescriptor<CalendarData> PROPERTY_CALENDAR_DATA = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "calendar-data"),
+		CalendarData.BUILDER);
+
+	public final static ElementDescriptor<Set<CalendarData>> PROPERTY_SUPPORTED_CALENDAR_DATA = ElementDescriptor.register(
+		QualifiedName.get(NAMESPACE, "supported-calendar-data"), new SetObjectBuilder<CalendarData>(PROPERTY_CALENDAR_DATA, false /* don't store null values */));
+
+	public final static ElementDescriptor<Integer> PROPERTY_MAX_RESOURCE_SIZE = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "max-resource-size"),
+		IntegerObjectBuilder.INSTANCE_STRICT);
+
+	// public final static ElementDescriptor<DateTime> PROPERTY_MIN_DATE_TIME = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "min-date-time"),
+	// DateTimeObjectBuilder.INSTANCE);
+
+	// public final static ElementDescriptor<DateTime> PROPERTY_MAX_DATE_TIME = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "max-date-time"),
+	// DateTimeObjectBuilder.INSTANCE);
+
+	public final static ElementDescriptor<Integer> PROPERTY_MAX_INSTANCES = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "max-instances"),
+		IntegerObjectBuilder.INSTANCE_STRICT);
+
+	public final static ElementDescriptor<Integer> PROPERTY_MAX_ATTENDEES_PER_INSTANCE = ElementDescriptor.register(
+		QualifiedName.get(NAMESPACE, "max-attendees-per-instance"), IntegerObjectBuilder.INSTANCE_STRICT);
+
+	public final static ElementDescriptor<Set<URI>> PROPERTY_CALENDAR_HOME_SET = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "calendar-home-set"),
+		new SetObjectBuilder<URI>(WebDav.HREF));
+
+	/**
 	 * Properties defined in <a href="http://tools.ietf.org/html/rfc4791#section-5.2">RFC 4791, Section 5.2</a> and <a
 	 * href="http://tools.ietf.org/html/rfc4791#section-6.2">RFC 4791, Section 6.2</a>
 	 */
 	public final static class Properties
 	{
-		public final static ElementDescriptor<String> CALENDAR_DESCRIPTION = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "calendar-description"),
-			StringObjectBuilder.INSTANCE);
+		public final static ElementDescriptor<String> CALENDAR_DESCRIPTION = CalDav.PROPERTY_CALENDAR_DESCRIPTION;
 
-		public final static ElementDescriptor<String> CALENDAR_TIMEZONE = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "calendar-timezone"),
-			StringObjectBuilder.INSTANCE);
+		public final static ElementDescriptor<String> CALENDAR_TIMEZONE = CalDav.PROPERTY_CALENDAR_TIMEZONE;
 
-		public final static ElementDescriptor<Set<String>> SUPPORTED_CALENDAR_COMPONENT_SET = ElementDescriptor.register(
-			QualifiedName.get(NAMESPACE, "supported-calendar-component-set"), new SetObjectBuilder<String>(COMP, false /* don't store null values */));
+		public final static ElementDescriptor<Set<String>> SUPPORTED_CALENDAR_COMPONENT_SET = CalDav.PROPERTY_SUPPORTED_CALENDAR_COMPONENT_SET;
 
-		public final static ElementDescriptor<CalendarData> CALENDAR_DATA = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "calendar-data"),
-			CalendarData.BUILDER);
+		public final static ElementDescriptor<CalendarData> CALENDAR_DATA = CalDav.PROPERTY_CALENDAR_DATA;
 
-		public final static ElementDescriptor<Set<CalendarData>> SUPPORTED_CALENDAR_DATA = ElementDescriptor.register(
-			QualifiedName.get(NAMESPACE, "supported-calendar-data"), new SetObjectBuilder<CalendarData>(CALENDAR_DATA, false /* don't store null values */));
+		public final static ElementDescriptor<Set<CalendarData>> SUPPORTED_CALENDAR_DATA = CalDav.PROPERTY_SUPPORTED_CALENDAR_DATA;
 
-		public final static ElementDescriptor<Integer> MAX_RESOURCE_SIZE = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "max-resource-size"),
-			IntegerObjectBuilder.INSTANCE_STRICT);
+		public final static ElementDescriptor<Integer> MAX_RESOURCE_SIZE = CalDav.PROPERTY_MAX_RESOURCE_SIZE;
 
-		// public final static ElementDescriptor<DateTime> MIN_DATE_TIME = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "min-date-time"),
-		// DateTimeObjectBuilder.INSTANCE);
+		// public final static ElementDescriptor<DateTime> MIN_DATE_TIME = CalDav.PROPERTY_MIN_DATE_TIME;
 
-		// public final static ElementDescriptor<DateTime> MAX_DATE_TIME = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "max-date-time"),
-		// DateTimeObjectBuilder.INSTANCE);
+		// public final static ElementDescriptor<DateTime> MAX_DATE_TIME = CalDav.PROPERTY_MAX_DATE_TIME;
 
-		public final static ElementDescriptor<Integer> MAX_INSTANCES = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "max-instances"),
-			IntegerObjectBuilder.INSTANCE_STRICT);
+		public final static ElementDescriptor<Integer> MAX_INSTANCES = CalDav.PROPERTY_MAX_INSTANCES;
 
-		public final static ElementDescriptor<Integer> MAX_ATTENDEES_PER_INSTANCE = ElementDescriptor.register(
-			QualifiedName.get(NAMESPACE, "max-attendees-per-instance"), IntegerObjectBuilder.INSTANCE_STRICT);
+		public final static ElementDescriptor<Integer> MAX_ATTENDEES_PER_INSTANCE = CalDav.PROPERTY_MAX_ATTENDEES_PER_INSTANCE;
 
 		/**
 		 * calendar-home-set is defined in <a href="http://tools.ietf.org/html/rfc4791#section-6.2.1">RFC 4791, section 6.2.1</a>. It's a principal property and
@@ -209,8 +226,7 @@ public class CalDav
 		 *     &lt;/C:calendar-home-set>
 		 * </pre>
 		 */
-		public final static ElementDescriptor<Set<URI>> CALENDAR_HOME_SET = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "calendar-home-set"),
-			new SetObjectBuilder<URI>(WebDav.HREF));
+		public final static ElementDescriptor<Set<URI>> CALENDAR_HOME_SET = CalDav.PROPERTY_CALENDAR_HOME_SET;
 
 
 		/**

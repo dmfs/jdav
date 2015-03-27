@@ -36,7 +36,8 @@ import org.dmfs.xmlobjects.serializer.XmlObjectSerializer.IXmlChildWriter;
 
 /**
  * Defines the <code>current-user-principal</code> property as specified in <a href="http://tools.ietf.org/html/rfc5397">RFC 5397</a>. The value of this
- * property is either an href pointing to a principal resource of the authenticated user or the pseudo principal {@link WebDavAcl#PRINCIPAL_UNAUTHENTICATED}.
+ * property is either an href pointing to a principal resource of the authenticated user or the pseudo principal
+ * {@link WebDavAcl#PSEUDO_PRINCIPAL_UNAUTHENTICATED}.
  * 
  * @author Marten Gajda <marten@dmfs.org>
  */
@@ -48,7 +49,7 @@ public final class CurrentUserPrincipal
 	 * 
 	 * <p>
 	 * <strong>Note: </strong> if the server returns the pseudo principal <code>unauthenticated</code> the value of this property will be
-	 * {@link WebDavAcl#PRINCIPAL_UNAUTHENTICATED}.
+	 * {@link WebDavAcl#PSEUDO_PRINCIPAL_UNAUTHENTICATED}.
 	 * </p>
 	 * 
 	 * <pre>
@@ -103,7 +104,7 @@ public final class CurrentUserPrincipal
 				throws XmlObjectPullParserException
 			{
 				// the unauthenticated pseudo principal is not inside of an href element
-				if (childDescriptor == WebDavAcl.UNAUTHENTICATED)
+				if (childDescriptor == WebDavAcl.PRINCIPAL_UNAUTHENTICATED)
 				{
 					return (URI) child;
 				}
@@ -114,10 +115,10 @@ public final class CurrentUserPrincipal
 			public void writeChildren(ElementDescriptor<URI> descriptor, URI object, IXmlChildWriter childWriter, SerializerContext context)
 				throws SerializerException, IOException
 			{
-				if (WebDavAcl.PRINCIPAL_UNAUTHENTICATED.equals(object))
+				if (WebDavAcl.PseudoPrincipals.UNAUTHENTICATED.equals(object))
 				{
 					// don't write href element if the URI equals the unauthenticated pseudo principal
-					childWriter.writeChild(WebDavAcl.UNAUTHENTICATED, object, context);
+					childWriter.writeChild(WebDavAcl.PRINCIPAL_UNAUTHENTICATED, object, context);
 				}
 				else
 				{

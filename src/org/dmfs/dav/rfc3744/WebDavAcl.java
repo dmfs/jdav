@@ -76,7 +76,7 @@ public final class WebDavAcl
 	{
 		public URI get(ElementDescriptor<URI> descriptor, URI recycle, ParserContext context) throws XmlObjectPullParserException
 		{
-			return PSEUDO_PRINCIPAL_ALL;
+			return PseudoPrincipals.ALL;
 		};
 	});
 
@@ -85,7 +85,7 @@ public final class WebDavAcl
 		{
 			public URI get(ElementDescriptor<URI> descriptor, URI recycle, ParserContext context) throws XmlObjectPullParserException
 			{
-				return PSEUDO_PRINCIPAL_AUTHENTICATED;
+				return PseudoPrincipals.AUTHENTICATED;
 			};
 		});
 
@@ -94,7 +94,7 @@ public final class WebDavAcl
 		{
 			public URI get(ElementDescriptor<URI> descriptor, URI recycle, ParserContext context) throws XmlObjectPullParserException
 			{
-				return PSEUDO_PRINCIPAL_UNAUTHENTICATED;
+				return PseudoPrincipals.UNAUTHENTICATED;
 			};
 		});
 
@@ -103,39 +103,31 @@ public final class WebDavAcl
 		{
 			public URI get(ElementDescriptor<URI> descriptor, URI recycle, ParserContext context) throws XmlObjectPullParserException
 			{
-				return PSEUDO_PRINCIPAL_ALL;
+				return PseudoPrincipals.SELF;
 			};
 		});
 
-	/**
-	 * This is the pseudo principal <code>all</code>. The actual value of this is not of any relevance and should not be used.
-	 */
-	public final static URI PSEUDO_PRINCIPAL_ALL = URI.create("http://dmfs.org/pseudo-principals/all");
-
-	/**
-	 * This is the pseudo principal <code>authenticated</code>. The actual value of this is not of any relevance and should not be used.
-	 */
-	public final static URI PSEUDO_PRINCIPAL_AUTHENTICATED = URI.create("http://dmfs.org/pseudo-principals/authenticated");
-
-	/**
-	 * This is the pseudo principal <code>unauthenticated</code>. The actual value of this is not of any relevance and should not be used.
-	 */
-	public final static URI PSEUDO_PRINCIPAL_UNAUTHENTICATED = URI.create("http://dmfs.org/pseudo-principals/unauthenticated");
-
-	/**
-	 * This is the pseudo principal <code>self</code>. The actual value of this is not of any relevance and should not be used.
-	 */
-	public final static URI PSEUDO_PRINCIPAL_SELF = URI.create("http://dmfs.org/pseudo-principals/self");
-
 	public final static class PseudoPrincipals
 	{
-		public final static URI ALL = WebDavAcl.PSEUDO_PRINCIPAL_ALL;
+		/**
+		 * This is the pseudo principal <code>all</code>. The actual value of this is not of any relevance and should not be used.
+		 */
+		public final static URI ALL = URI.create("http://dmfs.org/pseudo-principals/all");
 
-		public final static URI AUTHENTICATED = WebDavAcl.PSEUDO_PRINCIPAL_AUTHENTICATED;
+		/**
+		 * This is the pseudo principal <code>authenticated</code>. The actual value of this is not of any relevance and should not be used.
+		 */
+		public final static URI AUTHENTICATED = URI.create("http://dmfs.org/pseudo-principals/authenticated");
 
-		public final static URI UNAUTHENTICATED = WebDavAcl.PSEUDO_PRINCIPAL_UNAUTHENTICATED;
+		/**
+		 * This is the pseudo principal <code>unauthenticated</code>. The actual value of this is not of any relevance and should not be used.
+		 */
+		public final static URI UNAUTHENTICATED = URI.create("http://dmfs.org/pseudo-principals/unauthenticated");
 
-		public final static URI SELF = WebDavAcl.PSEUDO_PRINCIPAL_SELF;
+		/**
+		 * This is the pseudo principal <code>self</code>. The actual value of this is not of any relevance and should not be used.
+		 */
+		public final static URI SELF = URI.create("http://dmfs.org/pseudo-principals/self");
 	}
 
 	/* --------------------------------------------- Privilege elements --------------------------------------------- */
