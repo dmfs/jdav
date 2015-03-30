@@ -208,10 +208,10 @@ public final class WebDavAcl
 	/* --------------------------------------------- Property elements --------------------------------------------- */
 
 	final static ElementDescriptor<Set<QualifiedName>> PROP_CURRENT_USER_PRIVILEGE_SET = ElementDescriptor.register(
-		QualifiedName.get(NAMESPACE, "current-user-privilege-set"), new SetObjectBuilder<QualifiedName>(PRIVILEGE));
+		QualifiedName.get(NAMESPACE, "current-user-privilege-set"), new SetObjectBuilder<QualifiedName>(PRIVILEGE, false));
 
 	final static ElementDescriptor<Set<URI>> PROP_PRINCIPAL_COLLECTION_SET = ElementDescriptor.register(
-		QualifiedName.get(NAMESPACE, "principal-collection-set"), new SetObjectBuilder<URI>(WebDav.HREF));
+		QualifiedName.get(NAMESPACE, "principal-collection-set"), new SetObjectBuilder<URI>(WebDav.HREF, false));
 
 	/**
 	 * Properties defined in <a href="http://tools.ietf.org/html/rfc3744#section-4">RFC 3744, Section 4</a> and <a
