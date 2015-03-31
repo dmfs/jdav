@@ -23,6 +23,7 @@ import java.net.URI;
 import java.util.Set;
 
 import org.dmfs.dav.rfc4918.WebDav;
+import org.dmfs.dav.utils.MergeSetObjectBuilder;
 import org.dmfs.xmlobjects.ElementDescriptor;
 import org.dmfs.xmlobjects.QualifiedName;
 import org.dmfs.xmlobjects.builder.AbstractObjectBuilder;
@@ -135,9 +136,15 @@ public final class WebDavAcl
 	/**
 	 * privilege as defined in <a href="http://tools.ietf.org/html/rfc3744#section-5.4">RFC 3744, section 5.4</a> and <a
 	 * href="http://tools.ietf.org/html/rfc3744#appendix-A">RFC 3744, appendix A</a>. It accepts any element and stores the {@link QualifiedName}.
+	 * <p>
+	 * <strong>Note:</strong> Some servers return all privileges within one privilege element. According to the specs that's not allowed. To be compatible with
+	 * these this element is modeled by a {@link Set} of {@link QualifiedName}s instead of a single {@link QualifiedName}. Elements that have this as child
+	 * element must make sure they serialize all privileges separately.
+	 * </p>
+	 * TODO: we should revert this eventually
 	 */
-	public final static ElementDescriptor<QualifiedName> PRIVILEGE = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "privilege"),
-		new TransientObjectBuilder<QualifiedName>(QualifiedNameObjectBuilder.INSTANCE));
+	public final static ElementDescriptor<Set<QualifiedName>> PRIVILEGE = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "privilege"),
+		new SetObjectBuilder<QualifiedName>(QualifiedNameObjectBuilder.INSTANCE, false));
 
 	public final static ElementDescriptor<QualifiedName> PRIVILEGE_ALL = ElementDescriptor.registerWithParents(Privileges.ALL,
 		QualifiedNameObjectBuilder.INSTANCE, PRIVILEGE);
@@ -207,8 +214,13 @@ public final class WebDavAcl
 
 	/* --------------------------------------------- Property elements --------------------------------------------- */
 
+	/*
+	 * We use a MergeSetObjectBuilder to merge the privilege sets into one.
+	 * 
+	 * TODO: We should switch back to a simple SetObjectBuilder eventually.
+	 */
 	final static ElementDescriptor<Set<QualifiedName>> PROP_CURRENT_USER_PRIVILEGE_SET = ElementDescriptor.register(
-		QualifiedName.get(NAMESPACE, "current-user-privilege-set"), new SetObjectBuilder<QualifiedName>(PRIVILEGE, false));
+		QualifiedName.get(NAMESPACE, "current-user-privilege-set"), new MergeSetObjectBuilder<QualifiedName>(PRIVILEGE));
 
 	final static ElementDescriptor<Set<URI>> PROP_PRINCIPAL_COLLECTION_SET = ElementDescriptor.register(
 		QualifiedName.get(NAMESPACE, "principal-collection-set"), new SetObjectBuilder<URI>(WebDav.HREF, false));

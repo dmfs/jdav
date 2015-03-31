@@ -22,12 +22,12 @@ package org.dmfs.dav.rfc3253;
 import java.util.Set;
 
 import org.dmfs.dav.rfc4918.WebDav;
+import org.dmfs.dav.utils.MergeSetObjectBuilder;
 import org.dmfs.httpclientinterfaces.HttpMethod;
 import org.dmfs.xmlobjects.ElementDescriptor;
 import org.dmfs.xmlobjects.QualifiedName;
 import org.dmfs.xmlobjects.builder.QualifiedNameObjectBuilder;
 import org.dmfs.xmlobjects.builder.SetObjectBuilder;
-import org.dmfs.xmlobjects.builder.TransientObjectBuilder;
 
 
 /**
@@ -56,20 +56,33 @@ public final class WebDavVersioning
 	/**
 	 * <code>DAV:report</code> as defined in <a href="http://tools.ietf.org/html/rfc3253#section-3.1.5">RFC 3253, section 3.1.5</a>. It accepts any element and
 	 * stores the {@link QualifiedName}.
+	 * <p>
+	 * <strong>Note:</strong> Some servers return all reports within one report element. According to the specs that's not allowed. To be compatible with these
+	 * this element is modeled by a {@link Set} of {@link QualifiedName}s instead of a single {@link QualifiedName}. Elements that have this as child element
+	 * must make sure they serialize all reports separately.
+	 * </p>
+	 * TODO: we should revert this eventually and switch back to a TransientObjectBuilder.
 	 */
-	public final static ElementDescriptor<QualifiedName> REPORT = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "report"),
-		new TransientObjectBuilder<QualifiedName>(QualifiedNameObjectBuilder.INSTANCE));
+	public final static ElementDescriptor<Set<QualifiedName>> REPORT = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "report"),
+		new SetObjectBuilder<QualifiedName>(QualifiedNameObjectBuilder.INSTANCE, false));
 
 	/**
 	 * <code>DAV:supported-report</code> as defined in <a href="http://tools.ietf.org/html/rfc3253#section-3.1.5">RFC 3253, section 3.1.5</a>
+	 * <p>
+	 * TODO: switch back to TransientObjectBuilder
+	 * </p>
 	 */
-	public final static ElementDescriptor<QualifiedName> SUPPORTED_REPORT = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "supported-report"),
-		new TransientObjectBuilder<QualifiedName>(REPORT));
+	public final static ElementDescriptor<Set<QualifiedName>> SUPPORTED_REPORT = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "supported-report"),
+		new MergeSetObjectBuilder<QualifiedName>(REPORT));
 
 	/* --------------------------------------------- Property elements --------------------------------------------- */
 
+	/*
+	 * TODO: we use a MergeSetObjectBuilder to support broken servers that return all reports in one report element. We should revert this once all known
+	 * servers have been fixed for some time.
+	 */
 	final static ElementDescriptor<Set<QualifiedName>> PROP_SUPPORTED_REPORT_SET = ElementDescriptor.register(
-		QualifiedName.get(NAMESPACE, "supported-report-set"), new SetObjectBuilder<QualifiedName>(SUPPORTED_REPORT, false /* don't store null values */));
+		QualifiedName.get(NAMESPACE, "supported-report-set"), new MergeSetObjectBuilder<QualifiedName>(SUPPORTED_REPORT));
 
 	/**
 	 * Properties defined in <a href="http://tools.ietf.org/html/rfc3253">RFC 3253</a>.
