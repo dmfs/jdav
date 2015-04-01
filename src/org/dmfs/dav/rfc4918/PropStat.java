@@ -161,6 +161,8 @@ public class PropStat implements Recyclable
 	@Override
 	public void recycle()
 	{
+		// Note: we don't recycle the individual property objects, because the client may still use these property values.
+		// Also, in general many of them are represented by immutable objects, which can not be recycled anyway.
 		mStatus = STATUS_NONE;
 		if (mProperties != null)
 		{
