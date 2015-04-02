@@ -20,6 +20,7 @@
 package org.dmfs.dav.rfc4918;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -192,6 +193,29 @@ public class MultiStatus implements Recyclable
 	public String getSyncToken()
 	{
 		return mSyncToken;
+	}
+
+
+	/**
+	 * Resolve the {@link URI}s of the {@link Response} href elements objects against the given {@link URI}. This will only work for {@link Response} objects
+	 * stored in this {@link MultiStatus}.
+	 * <p>
+	 * <strong>Note:</strong> This will only resolve the href URIs of the response objects itself. It will not resolve any URI value of any property. If you
+	 * need to resolve those you should do that against the the URI you get from {@link #getHRef()}.
+	 * </p>
+	 * 
+	 * @param uri
+	 *            The {@link URI} to resolve against.
+	 */
+	public void resolveHRefs(URI uri)
+	{
+		if (mResponses != null)
+		{
+			for (Response response : mResponses)
+			{
+				response.resolveHRefs(uri);
+			}
+		}
 	}
 
 
