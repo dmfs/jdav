@@ -4,7 +4,7 @@
   <property name="src.dir" value="${basedir}/src"/>
   <property name="jar.dir" value="${basedir}/jars"/>
   <path id="libraryclasspath">
-    <pathelement location="libs/http-client-interfaces.jar"/>
+    <pathelement location="libs/http-client-interfaces-0.1.jar"/>
     <pathelement location="libs/xmlobjects.jar"/>
   </path>
   <path id="classpath">
