@@ -59,7 +59,7 @@ public class DavParserContext extends ParserContext
 
 
 	/**
-	 * Return whether stict parsing has been requested or not.
+	 * Return whether strict parsing has been requested or not.
 	 * 
 	 * @return <code>true</code> to be strict with issues.
 	 */

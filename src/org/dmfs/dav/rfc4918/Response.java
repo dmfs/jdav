@@ -367,7 +367,7 @@ public class Response implements Recyclable
 	/**
 	 * Get the {@link Set} of {@link XmlElementDescriptor}s of all properties in this response.
 	 * 
-	 * @return An unmodifyable {@link Set} of {@link XmlElementDescriptor}s, may be <code>null</code> or empty if there are no properties in this response.
+	 * @return An unmodifiable {@link Set} of {@link XmlElementDescriptor}s, may be <code>null</code> or empty if there are no properties in this response.
 	 */
 	public Set<ElementDescriptor<?>> getProperties()
 	{
@@ -377,5 +377,34 @@ public class Response implements Recyclable
 		}
 
 		return Collections.unmodifiableSet(mPropStatByProperty.keySet());
+	}
+
+
+	/**
+	 * Resolve the {@link URI}s of the href elements of this response object against the given {@link URI}.
+	 * <p>
+	 * <strong>Note:</strong> This will only resolve the href URIs of the response object itself. It will not resolve any URI value of any property. If you need
+	 * to resolve those you should do that against the the URI you get from {@link #getHRef()}.
+	 * </p>
+	 * 
+	 * @param uri
+	 *            The {@link URI} to resolve against.
+	 */
+	public void resolveHRefs(URI uri)
+	{
+		if (mLocation != null && !mLocation.isAbsolute())
+		{
+			mLocation = uri.resolve(mLocation);
+		}
+
+		List<URI> hrefs = mHrefs;
+		for (int i = 0, count = hrefs.size(); i < count; ++i)
+		{
+			URI href = hrefs.get(i);
+			if (!href.isAbsolute())
+			{
+				hrefs.set(i, uri.resolve(href));
+			}
+		}
 	}
 }
