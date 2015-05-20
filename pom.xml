@@ -11,8 +11,8 @@
 	<url>https://github.com/dmfs/jdav</url>
 	<licenses>
 		<license>
-			<name>The Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<name>GPL 2 or later</name>
+			<url>http://www.gnu.org/licenses/gpl-2.0.txt</url>
 		</license>
 	</licenses>
 	<developers>
