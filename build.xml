@@ -4,8 +4,9 @@
   <property name="src.dir" value="${basedir}/src"/>
   <property name="jar.dir" value="${basedir}/jars"/>
   <path id="libraryclasspath">
-    <pathelement location="libs/http-client-interfaces-0.1.jar"/>
+    <pathelement location="libs/http-client-interfaces-0.2.jar"/>
     <pathelement location="libs/xmlobjects.jar"/>
+    <pathelement location="libs/rfc5545-datetime-0.1.1.jar"/>
   </path>
   <path id="classpath">
     <pathelement location="bin/classes"/>

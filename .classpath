@@ -5,7 +5,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="libs/xmlobjects.jar"/>
-	<classpathentry kind="lib" path="libs/http-client-interfaces-0.1.jar"/>
+	<classpathentry kind="lib" path="libs/http-client-interfaces-0.2.jar"/>
 	<classpathentry kind="lib" path="libs/kxml2-2.3.0.jar"/>
 	<classpathentry kind="lib" path="libs/rfc5545-datetime-0.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
