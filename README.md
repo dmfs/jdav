@@ -24,6 +24,7 @@ The following matrix gives an overview over which RFCs are currently supported. 
 | [RFC 4918](https://tools.ietf.org/html/rfc4918) | WebDAV  | [ ] | [ ] |
 | [RFC 5323](https://tools.ietf.org/html/rfc5323) | WebDAV SEARCH | [ ] | [ ] |
 | [RFC 5397](https://tools.ietf.org/html/rfc5397) | WebDAV Current Principal Extension | [X] | [X] |
+| [RFC 5689](https://tools.ietf.org/html/rfc5689) | Extended MKCOL for Web Distributed Authoring and Versioning (WebDAV) | [X] | [X] |
 | [RFC 5842](https://tools.ietf.org/html/rfc5842) | Binding Extensions to Web Distributed Authoring and Versioning | [ ] | [ ] |
 | [RFC 5995](https://tools.ietf.org/html/rfc5995) | Using POST to Add Members to Web Distributed Authoring and Versioning (WebDAV) Collections | [X] | [X] |
 | [RFC 6352](https://tools.ietf.org/html/rfc6352) | CardDAV: vCard Extensions to Web Distributed Authoring and Versioning  | [ ] | [ ] |
