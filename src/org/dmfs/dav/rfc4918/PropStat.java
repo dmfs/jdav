@@ -20,7 +20,9 @@
 package org.dmfs.dav.rfc4918;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 
 import org.dmfs.dav.DavParserContext;
 import org.dmfs.httpclientinterfaces.HttpStatus;
@@ -140,12 +142,12 @@ public class PropStat implements Recyclable
 	/**
 	 * A map of properties to values or <code>null</code> if no value was returned (because status was not "OK").
 	 */
-	Map<ElementDescriptor<?>, Object> mProperties;
+	private Map<ElementDescriptor<?>, Object> mProperties;
 
 	/**
 	 * The status of this propstat element.
 	 */
-	int mStatus;
+	private int mStatus;
 
 	/**
 	 * The error element of this propstat element.
@@ -153,7 +155,7 @@ public class PropStat implements Recyclable
 	private Error mError;
 
 	/**
-	 * The responseelement element of this propstat element.
+	 * The value of the responsedescription element of this propstat element.
 	 */
 	private String mResponseDescription;
 
@@ -180,13 +182,14 @@ public class PropStat implements Recyclable
 	 *            the {@link XmlElementDescriptor} of the property to return.
 	 * @return the value of the property or <code>null</code> if there is no property of this name.
 	 */
-	public Object getPropertyValue(ElementDescriptor<?> property)
+	@SuppressWarnings("unchecked")
+	public <T> T getPropertyValue(ElementDescriptor<T> property)
 	{
 		if (mProperties == null)
 		{
 			return null;
 		}
-		return mProperties.get(property);
+		return (T) mProperties.get(property);
 	}
 
 
@@ -220,5 +223,16 @@ public class PropStat implements Recyclable
 	public Error getError()
 	{
 		return mError;
+	}
+
+
+	/**
+	 * Returns the {@link Set} of properties in this PropStat element, each represented by its {@link ElementDescriptor}s.
+	 * 
+	 * @return A {@link Set} of {@link ElementDescriptor}s or <code>null</code>.
+	 */
+	public Set<ElementDescriptor<?>> getPropertyDescriptors()
+	{
+		return mProperties == null ? null : Collections.unmodifiableSet(mProperties.keySet());
 	}
 }

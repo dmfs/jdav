@@ -79,7 +79,7 @@ public class Response implements Recyclable
 			if (childDescriptor == WebDav.PROPSTAT)
 			{
 				PropStat propStat = (PropStat) child;
-				if (propStat.mStatus == HttpStatus.NOT_FOUND && context instanceof DavParserContext
+				if (propStat.getStatusCode() == HttpStatus.NOT_FOUND && context instanceof DavParserContext
 					&& !((DavParserContext) context).getKeepNotFoundProperties())
 				{
 					// the PropStat element has status NOT_FOUND and we shall not keep it, so just recycle it
@@ -161,7 +161,7 @@ public class Response implements Recyclable
 	 * The status of this element. If the response didn't contain any <code>status</code> element (because it contained propstat elements), this will have the
 	 * value -1.
 	 */
-	protected int mStatus = STATUS_NONE;
+	private int mStatus = STATUS_NONE;
 
 	/**
 	 * All {@link PropStat} children by status code.
@@ -205,9 +205,10 @@ public class Response implements Recyclable
 			propStatByProperty = mPropStatByProperty = new HashMap<ElementDescriptor<?>, PropStat>(16);
 		}
 
-		if (propStat.mProperties != null)
+		Set<ElementDescriptor<?>> properties = propStat.getPropertyDescriptors();
+		if (properties != null)
 		{
-			for (ElementDescriptor<?> property : propStat.mProperties.keySet())
+			for (ElementDescriptor<?> property : properties)
 			{
 				propStatByProperty.put(property, propStat);
 			}
@@ -218,7 +219,7 @@ public class Response implements Recyclable
 			mPropStatByStatus = new HashMap<Integer, PropStat>(6 /* the average case has no more than 2 PropStats per Response */);
 		}
 
-		return mPropStatByStatus.put(propStat.mStatus, propStat);
+		return mPropStatByStatus.put(propStat.getStatusCode(), propStat);
 	}
 
 
@@ -339,7 +340,7 @@ public class Response implements Recyclable
 			return STATUS_NONE;
 		}
 
-		return propStat.mStatus;
+		return propStat.getStatusCode();
 	}
 
 
@@ -351,16 +352,15 @@ public class Response implements Recyclable
 	 * @return The property value, may be <code>null</code> if the property was not present or didn't contain any value (because it had a non-
 	 *         {@link HttpStatus#OK} status).
 	 */
-	@SuppressWarnings("unchecked")
 	public <T> T getPropertyValue(ElementDescriptor<T> descriptor)
 	{
 		PropStat propStat = mPropStatByProperty.get(descriptor);
-		if (propStat == null || propStat.mProperties == null)
+		if (propStat == null)
 		{
 			return null;
 		}
 
-		return (T) propStat.mProperties.get(descriptor);
+		return propStat.getPropertyValue(descriptor);
 	}
 
 

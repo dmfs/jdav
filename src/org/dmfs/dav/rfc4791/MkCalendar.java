@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.dmfs.dav.rfc4918.PropertyUpdate;
 import org.dmfs.dav.rfc4918.WebDav;
 import org.dmfs.xmlobjects.ElementDescriptor;
 import org.dmfs.xmlobjects.builder.AbstractObjectBuilder;
@@ -56,15 +55,13 @@ import org.dmfs.xmlobjects.serializer.XmlObjectSerializer.IXmlChildWriter;
  * &lt;!ELEMENT mkcalendar (DAV:set)>
  * </pre>
  * 
- * TODO: add server side support
- * 
  * @author Marten Gajda <marten@dmfs.org>
  */
 public class MkCalendar implements Recyclable
 {
 
 	/**
-	 * An {@link IObjectBuilder} to serialize and build {@link PropertyUpdate} objects.
+	 * An {@link IObjectBuilder} to serialize and build {@link MkCalendar} objects.
 	 */
 	public final static IObjectBuilder<MkCalendar> BUILDER = new AbstractObjectBuilder<MkCalendar>()
 	{
