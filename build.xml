@@ -20,7 +20,7 @@
 	<path id="libraryclasspath">
 		<pathelement location="libs/http-client-interfaces-0.2.jar" />
 		<pathelement location="libs/xmlobjects.jar" />
-		<pathelement location="libs/rfc5545-datetime-0.1.1.jar" />
+		<pathelement location="libs/rfc5545-datetime-0.2.2.jar" />
 	</path>
 
 	<path id="classpath">
@@ -69,7 +69,8 @@
 	</target>
 	<!-- Compile project -->
 	<target name="compile">
-		<javac srcdir="${src.dir}" includeantruntime="false">
+		<javac srcdir="${src.dir}" includeantruntime="false" source="1.7"
+			target="1.7">
 			<classpath refid="classpath" />
 		</javac>
 	</target>
