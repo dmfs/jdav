@@ -23,9 +23,6 @@ import java.io.IOException;
 
 import org.dmfs.dav.FilterBase;
 import org.dmfs.rfc5545.DateTime;
-import org.dmfs.rfc5545.Weekday;
-import org.dmfs.rfc5545.calendarmetrics.CalendarMetrics;
-import org.dmfs.rfc5545.calendarmetrics.GregorianCalendarMetrics;
 import org.dmfs.xmlobjects.ElementDescriptor;
 import org.dmfs.xmlobjects.QualifiedName;
 import org.dmfs.xmlobjects.builder.AbstractObjectBuilder;
@@ -44,8 +41,6 @@ import org.dmfs.xmlobjects.serializer.XmlObjectSerializer.IXmlAttributeWriter;
  */
 public final class TimeRange extends CalDavFilter
 {
-	private final static CalendarMetrics GREGORIAN_METRICS = new GregorianCalendarMetrics(Weekday.MO, 4);
-
 	private final static QualifiedName ATTRIBUTE_START = QualifiedName.get("start");
 	private final static QualifiedName ATTRIBUTE_END = QualifiedName.get("end");
 
@@ -111,8 +106,8 @@ public final class TimeRange extends CalDavFilter
 		{
 			throw new IllegalArgumentException("start must be before end");
 		}
-		this.start = start == Long.MIN_VALUE ? null : new DateTime(start);
-		this.end = end == Long.MAX_VALUE ? null : new DateTime(end);
+		this.start = start == Long.MIN_VALUE ? null : new DateTime(DateTime.GREGORIAN_CALENDAR_SCALE, DateTime.UTC, start);
+		this.end = end == Long.MAX_VALUE ? null : new DateTime(DateTime.GREGORIAN_CALENDAR_SCALE, DateTime.UTC, end);
 	}
 
 
@@ -148,16 +143,13 @@ public final class TimeRange extends CalDavFilter
 			throw new IllegalArgumentException("start must be before end");
 		}
 
-		if (start != null && start.isFloating() || end != null && end.isFloating())
-		{
-			throw new IllegalArgumentException("start and end dates must be absolute times");
-		}
-
 		if (start != null)
 		{
-			// DateTime is not immutable, so we get or own private copy to ensure it's not modifed afterwards
-			this.start = new DateTime(GREGORIAN_METRICS, start);
-			this.start.shiftTimeZone(DateTime.UTC);
+			if (start.isFloating())
+			{
+				throw new IllegalArgumentException("start date must have absolute time");
+			}
+			this.start = new DateTime(DateTime.GREGORIAN_CALENDAR_SCALE, DateTime.UTC, start);
 		}
 		else
 		{
@@ -166,9 +158,11 @@ public final class TimeRange extends CalDavFilter
 
 		if (end != null)
 		{
-			// DateTime is not immutable, so we get or own private copy to ensure it's not modifed afterwards
-			this.end = new DateTime(GREGORIAN_METRICS, end);
-			this.end.shiftTimeZone(DateTime.UTC);
+			if (end.isFloating())
+			{
+				throw new IllegalArgumentException("end date must have absolute time");
+			}
+			this.end = new DateTime(DateTime.GREGORIAN_CALENDAR_SCALE, DateTime.UTC, end);
 		}
 		else
 		{
