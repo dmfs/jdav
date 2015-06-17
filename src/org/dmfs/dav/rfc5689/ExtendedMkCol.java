@@ -20,6 +20,7 @@
 package org.dmfs.dav.rfc5689;
 
 import org.dmfs.dav.rfc4918.WebDav;
+import org.dmfs.httpclientinterfaces.HttpMethod;
 import org.dmfs.xmlobjects.ElementDescriptor;
 import org.dmfs.xmlobjects.QualifiedName;
 
@@ -36,6 +37,11 @@ public final class ExtendedMkCol
 	 * Extended MkCol uses the {@link WebDav#NAMESPACE} namespace.
 	 */
 	public final static String NAMESPACE = WebDav.NAMESPACE;
+
+	/**
+	 * The HTTP method to be used with this request. It's the same as {@link WebDav#METHOD_MKCOL}.
+	 */
+	public final static HttpMethod METHOD_MKCOL = WebDav.METHOD_MKCOL;
 
 	/**
 	 * Element descriptor of {@link MkCol}.
