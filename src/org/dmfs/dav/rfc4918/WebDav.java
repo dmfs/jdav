@@ -201,7 +201,7 @@ public final class WebDav
 	 * remove element as defined in <a href="http://tools.ietf.org/html/rfc4918#section-14.23">RFC 4918 Section 14.23</a>.
 	 */
 	public final static ElementDescriptor<Map<ElementDescriptor<?>, Object>> REMOVE = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "remove"),
-		ElementMapObjectBuilder.INSTANCE);
+		new TransientObjectBuilder<Map<ElementDescriptor<?>, Object>>(PROP));
 
 	/**
 	 * response element as defined in <a href="http://tools.ietf.org/html/rfc4918#section-14.24">RFC 4918 Section 14.24</a>.
@@ -219,7 +219,7 @@ public final class WebDav
 	 * because it's not used in requests.
 	 */
 	public final static ElementDescriptor<Map<ElementDescriptor<?>, Object>> SET = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "set"),
-		ElementMapObjectBuilder.INSTANCE);
+		new TransientObjectBuilder<Map<ElementDescriptor<?>, Object>>(PROP));
 
 	/**
 	 * shared element as defined in <a href="http://tools.ietf.org/html/rfc4918#section-14.27">RFC 4918 Section 14.27</a>.
