@@ -19,6 +19,7 @@
 
 package org.dmfs.dav.rfc3253;
 
+import java.io.IOException;
 import java.util.Set;
 
 import org.dmfs.dav.rfc4918.WebDav;
@@ -26,8 +27,15 @@ import org.dmfs.dav.utils.MergeSetObjectBuilder;
 import org.dmfs.httpclientinterfaces.HttpMethod;
 import org.dmfs.xmlobjects.ElementDescriptor;
 import org.dmfs.xmlobjects.QualifiedName;
+import org.dmfs.xmlobjects.builder.AbstractObjectBuilder;
 import org.dmfs.xmlobjects.builder.QualifiedNameObjectBuilder;
 import org.dmfs.xmlobjects.builder.SetObjectBuilder;
+import org.dmfs.xmlobjects.builder.StringObjectBuilder;
+import org.dmfs.xmlobjects.pull.ParserContext;
+import org.dmfs.xmlobjects.pull.XmlObjectPullParserException;
+import org.dmfs.xmlobjects.serializer.SerializerContext;
+import org.dmfs.xmlobjects.serializer.SerializerException;
+import org.dmfs.xmlobjects.serializer.XmlObjectSerializer;
 
 
 /**
@@ -47,11 +55,44 @@ public final class WebDavVersioning
 	public final static String NAMESPACE = WebDav.NAMESPACE;
 
 	/**
+	 * {@link QualifiedName} of a name attribute.
+	 */
+	private final static QualifiedName ATTRIBUTE_NAME = QualifiedName.get("name");
+
+	/**
 	 * REPORT HTTP method.
 	 * 
 	 * @see <a href="http://tools.ietf.org/html/rfc3253#section-3.6">RFC 3253, section 3.6</a>
 	 */
 	public final static HttpMethod METHOD_REPORT = HttpMethod.safeMethod("REPORT");
+
+	/**
+	 * <code>DAV:supported-method</code> as defined in <a href="https://tools.ietf.org/html/rfc3253#section-3.1.3">RFC 3253, section 3.1.3</a>
+	 * <p/>
+	 * Note: this will return <code>null</code> for unknown method names, i.e. if no {@link HttpMethod} has been created for that verb.
+	 */
+	public final static ElementDescriptor<HttpMethod> SUPPORTED_METHOD = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "supported-method"),
+		new AbstractObjectBuilder<HttpMethod>()
+		{
+			@Override
+			public HttpMethod update(ElementDescriptor<HttpMethod> descriptor, HttpMethod object, QualifiedName attribute, String value, ParserContext context)
+				throws XmlObjectPullParserException
+			{
+				if (attribute == ATTRIBUTE_NAME)
+				{
+					return HttpMethod.get(value);
+				}
+				return null;
+			};
+
+
+			@Override
+			public void writeAttributes(ElementDescriptor<HttpMethod> descriptor, HttpMethod object, XmlObjectSerializer.IXmlAttributeWriter attributeWriter,
+				SerializerContext context) throws SerializerException, IOException
+			{
+				attributeWriter.writeAttribute(ATTRIBUTE_NAME, object.verb, context);
+			};
+		});
 
 	/**
 	 * <code>DAV:report</code> as defined in <a href="http://tools.ietf.org/html/rfc3253#section-3.1.5">RFC 3253, section 3.1.5</a>. It accepts any element and
@@ -77,6 +118,14 @@ public final class WebDavVersioning
 
 	/* --------------------------------------------- Property elements --------------------------------------------- */
 
+	final static ElementDescriptor<String> PROP_COMMENT = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "comment"), StringObjectBuilder.INSTANCE);
+
+	final static ElementDescriptor<String> PROP_CREATOR_DISPLAYNAME = ElementDescriptor.register(QualifiedName.get(NAMESPACE, "creator-displayname"),
+		StringObjectBuilder.INSTANCE);
+
+	final static ElementDescriptor<Set<HttpMethod>> PROP_SUPPORTED_METHOD_SET = ElementDescriptor.register(
+		QualifiedName.get(NAMESPACE, "supported-method-set"), new SetObjectBuilder<>(SUPPORTED_METHOD, false));
+
 	/*
 	 * TODO: we use a MergeSetObjectBuilder to support broken servers that return all reports in one report element. We should revert this once all known
 	 * servers have been fixed for some time.
@@ -89,6 +138,25 @@ public final class WebDavVersioning
 	 */
 	public final static class Properties
 	{
+
+		/**
+		 * <code>DAV:comment</code> as defined in <a href="http://tools.ietf.org/html/rfc3253#section-3.1.1">RFC 3253, section 3.1.1</a>
+		 */
+		public final static ElementDescriptor<String> COMMENT = WebDavVersioning.PROP_COMMENT;
+
+		/**
+		 * <code>DAV:creator-displayname</code> as defined in <a href="http://tools.ietf.org/html/rfc3253#section-3.1.2">RFC 3253, section 3.1.2</a>
+		 */
+		public final static ElementDescriptor<String> CREATOR_DISPLAYNAME = WebDavVersioning.PROP_CREATOR_DISPLAYNAME;
+
+		/**
+		 * <code>DAV:supported-method-set</code> as defined in <a href="http://tools.ietf.org/html/rfc3253#section-3.1.3">RFC 3253, section 3.1.3</a>
+		 * <p/>
+		 * Note: this will only contain {@link HttpMethod}s registered at the time a response as been parsed. Make sure all classes defining HttpMethods you're
+		 * interested in have been loaded.
+		 */
+		public final static ElementDescriptor<Set<HttpMethod>> SUPPORTED_METHOD_SET = WebDavVersioning.PROP_SUPPORTED_METHOD_SET;
+
 		/**
 		 * <code>DAV:supported-report-set</code> as defined in <a href="http://tools.ietf.org/html/rfc3253#section-3.1.5">RFC 3253, section 3.1.5</a>
 		 */
