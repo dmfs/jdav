@@ -18,9 +18,7 @@
 	<property name="ossrh-server-id" value="ossrh" />
 
 	<path id="libraryclasspath">
-		<pathelement location="libs/http-client-interfaces-0.2.1.jar" />
-		<pathelement location="libs/xmlobjects-0.4.2.jar" />
-		<pathelement location="libs/rfc5545-datetime-0.2.2.jar" />
+		<fileset dir="libs" includes="*.jar" />
 	</path>
 
 	<path id="classpath">
