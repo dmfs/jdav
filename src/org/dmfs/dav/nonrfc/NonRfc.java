@@ -30,6 +30,7 @@ import org.dmfs.xmlobjects.pull.ParserContext;
 import org.dmfs.xmlobjects.pull.XmlObjectPullParserException;
 import org.dmfs.xmlobjects.serializer.SerializerContext;
 import org.dmfs.xmlobjects.serializer.SerializerException;
+import org.dmfs.xmlobjects.serializer.XmlObjectSerializer;
 import org.dmfs.xmlobjects.serializer.XmlObjectSerializer.IXmlChildWriter;
 
 
@@ -50,6 +51,11 @@ public class NonRfc
 	 * Apple iCal name space.
 	 */
 	public final static String NAMESPACE_APPLE_ICAL = "http://apple.com/ns/ical/";
+
+	/**
+	 * Attribute symbolic-color.
+	 */
+	private final static QualifiedName ATTR_SYMBOLIC_COLOR = QualifiedName.get("symbolic-color");
 
 	/**
 	 * DAV Properties that are not standardized, but still used in common.
@@ -126,6 +132,15 @@ public class NonRfc
 						// not a valid color
 						return null;
 					}
+				};
+
+
+				@Override
+				public void writeAttributes(ElementDescriptor<Integer> descriptor, Integer object, XmlObjectSerializer.IXmlAttributeWriter attributeWriter,
+					SerializerContext context) throws SerializerException, IOException
+				{
+					// for now we always create "custom" colors, at some point we might support css color names
+					attributeWriter.writeAttribute(ATTR_SYMBOLIC_COLOR, "custom", context);
 				};
 
 
