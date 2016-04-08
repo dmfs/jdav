@@ -152,6 +152,9 @@ public final class WebDavAcl
 	public final static ElementDescriptor<QualifiedName> PRIVILEGE_BIND = ElementDescriptor.registerWithParents(Privileges.BIND,
 		QualifiedNameObjectBuilder.INSTANCE, PRIVILEGE);
 
+	public final static ElementDescriptor<QualifiedName> PRIVILEGE_READ = ElementDescriptor.registerWithParents(Privileges.READ,
+		QualifiedNameObjectBuilder.INSTANCE, PRIVILEGE);
+
 	public final static ElementDescriptor<QualifiedName> PRIVILEGE_READ_ACL = ElementDescriptor.registerWithParents(Privileges.READ_ACL,
 		QualifiedNameObjectBuilder.INSTANCE, PRIVILEGE);
 
