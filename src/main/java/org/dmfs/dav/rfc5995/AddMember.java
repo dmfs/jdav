@@ -81,7 +81,7 @@ public final class AddMember
          * specifying the "Add-Member" URI associated with the collection, on
          * which the creation of a new child resource was attempted:
          *
-         * &lt;!ELEMENT allow-client-defined-uri (add-member?)>
+         * &lt;!ELEMENT allow-client-defined-uri (add-member?)&gt;
          * </pre>
          */
         public final static ElementDescriptor<URI> ALLOW_CLIENT_DEFINED_URI = ElementDescriptor.register(

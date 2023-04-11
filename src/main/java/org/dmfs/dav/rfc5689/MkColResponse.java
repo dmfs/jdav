@@ -59,7 +59,7 @@ import java.util.Set;
  *
  * Definition:
  *
- * &lt;!ELEMENT mkcol-response (propstat+)>
+ * &lt;!ELEMENT mkcol-response (propstat+)&gt;
  * </pre>
  * <p>
  * TODO: this shares some code with {@link Response}. Check if can improve the implementation.

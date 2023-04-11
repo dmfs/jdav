@@ -90,7 +90,7 @@ public final class CalDavScheduling
          *
          * Definition:
          *
-         *   &lt;!ELEMENT calendar-user-address-set (DAV:href*)>
+         *   &lt;!ELEMENT calendar-user-address-set (DAV:href*)&gt;
          * </pre>
          */
         public final static ElementDescriptor<Set<URI>> CALENDAR_USER_ADDRESS_SET = CalDavScheduling.PROPERTY_CALENDAR_USER_ADDRESS_SET;

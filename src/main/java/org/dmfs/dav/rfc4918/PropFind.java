@@ -48,7 +48,7 @@ import java.util.Map;
  *    'prop' is used inside 'propfind', it MUST NOT contain property
  *    values.
  *
- * &lt;!ELEMENT propfind ( propname | (allprop, include?) | prop ) >
+ * &lt;!ELEMENT propfind ( propname | (allprop, include?) | prop ) &gt;
  * </pre>
  */
 public class PropFind extends PropertyRequest
@@ -57,8 +57,8 @@ public class PropFind extends PropertyRequest
      * An {@link IObjectBuilder} to parse and serialize propfind objects.
      *
      * <p>
-     * TODO: at present this wouldn't throw if &lt;DAV:prop> and &lt;DAV:allprop> or &lt;DAV:propname> are present in the same XML document. It also allows
-     * &lt;DAV:include> to be used with all the other elements. In strict mode we should throw an exception in that case.
+     * TODO: at present this wouldn't throw if &lt;DAV:prop&gt; and &lt;DAV:allprop&gt; or &lt;DAV:propname&gt; are present in the same XML document. It also allows
+     * &lt;DAV:include&gt; to be used with all the other elements. In strict mode we should throw an exception in that case.
      * </p>
      */
     public final static IObjectBuilder<PropFind> BUILDER = new AbstractObjectBuilder<PropFind>()

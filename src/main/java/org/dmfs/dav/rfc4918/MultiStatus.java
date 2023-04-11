@@ -40,7 +40,7 @@ import java.util.List;
 
 /**
  * Represents a multi-status element as defined in <a href="http://tools.ietf.org/html/rfc4918#section-14.16">RFC 4918 section 14.16</a> including the extension
- * specified in <a href="http://tools.ietf.org/html/rfc6578#section-6.4">RFC 6578 section 6.4</a> to return a <code>&lt;sync-token></code> element.
+ * specified in <a href="http://tools.ietf.org/html/rfc6578#section-6.4">RFC 6578 section 6.4</a> to return a <code>&lt;sync-token&gt;</code> element.
  *
  * <pre>
  * Name:  multistatus
@@ -53,12 +53,12 @@ import java.util.List;
  * Description:  See Section 3.
  *
  * &lt;!ELEMENT multistatus (response*, responsedescription?,
- *                        sync-token?) >
+ *                        sync-token?) &gt;
  *
  * &lt;!-- DAV:multistatus originally defined in RFC 4918, Section 14.16
- *      but overridden here to add the DAV:sync-token element -->
- * &lt;!-- DAV:response defined in RFC 4918, Section 14.24 -->
- * &lt;!-- DAV:responsedescription defined in RFC 4918, Section 14.25 -->
+ *      but overridden here to add the DAV:sync-token element --&gt;
+ * &lt;!-- DAV:response defined in RFC 4918, Section 14.24 --&gt;
+ * &lt;!-- DAV:responsedescription defined in RFC 4918, Section 14.25 --&gt;
  * </pre>
  * <p>
  * TODO: we probably shouldn't use a list to store responses. Instead we could switch to something that allows to render the response on the fly.

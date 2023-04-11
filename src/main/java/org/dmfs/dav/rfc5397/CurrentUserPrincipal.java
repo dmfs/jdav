@@ -84,14 +84,14 @@ public final class CurrentUserPrincipal
      *
      *    Definition:
      *
-     *       &lt;!ELEMENT current-user-principal (unauthenticated | href)>
-     *       &lt;!-- href value: a URL to a principal resource -->
+     *       &lt;!ELEMENT current-user-principal (unauthenticated | href)&gt;
+     *       &lt;!-- href value: a URL to a principal resource --&gt;
      *
      *    Example:
      *
-     *       &lt;D:current-user-principal xmlns:D="DAV:">
-     *         &lt;D:href>/principals/users/cdaboo&lt;/D:href>
-     *       &lt;/D:current-user-principal>
+     *       &lt;D:current-user-principal xmlns:D="DAV:"&gt;
+     *         &lt;D:href&gt;/principals/users/cdaboo&lt;/D:href&gt;
+     *       &lt;/D:current-user-principal&gt;
      * </pre>
      */
     public final static ElementDescriptor<URI> CURRENT_USER_PRINCIPAL = ElementDescriptor.register(

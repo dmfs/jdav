@@ -57,10 +57,10 @@ import java.util.Map;
  *
  * Description:  See Section 3.
  *
- * &lt;!ELEMENT sync-collection (sync-token, sync-level, limit?, prop)>
+ * &lt;!ELEMENT sync-collection (sync-token, sync-level, limit?, prop)&gt;
  *
- * &lt;!-- DAV:limit defined in RFC 5323, Section 5.17 -->
- * &lt;!-- DAV:prop defined in RFC 4918, Section 14.18 -->
+ * &lt;!-- DAV:limit defined in RFC 5323, Section 5.17 --&gt;
+ * &lt;!-- DAV:prop defined in RFC 4918, Section 14.18 --&gt;
  * </pre>
  */
 public final class SyncCollection extends PropertyRequest

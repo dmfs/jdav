@@ -54,7 +54,7 @@ import java.util.Map;
  *
  * Definition:
  *
- * &lt;!ELEMENT mkcol (set+)>
+ * &lt;!ELEMENT mkcol (set&gt;
  * </pre>
  * <p>
  * TODO: mkcol and mkcalendar have almost identical implementations, can we inherit one from the other?
