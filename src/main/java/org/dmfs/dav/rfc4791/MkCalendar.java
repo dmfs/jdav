@@ -52,7 +52,7 @@ import java.util.Map;
  *
  * Definition:
  *
- * &lt;!ELEMENT mkcalendar (DAV:set)>
+ * &lt;!ELEMENT mkcalendar (DAV:set)&gt;
  * </pre>
  */
 public class MkCalendar implements Recyclable

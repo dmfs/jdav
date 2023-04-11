@@ -76,4 +76,14 @@ dependencies {
     api 'org.dmfs:xmlobjects:0.4.3'
     api 'org.dmfs:http-client-essentials:0.20'
     api 'org.dmfs:http-client-types:0.20'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
+    testImplementation 'org.saynotobugs:confidence-core:0.15.1'
+    testImplementation 'org.dmfs:jems2-testing:2.18.0'
+    testImplementation 'org.saynotobugs:confidence-incubator:0.15.1'
+}
+
+
+test {
+    useJUnitPlatform()
 }

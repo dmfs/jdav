@@ -216,14 +216,14 @@ public class CalDav
          *
          * Definition:
          *
-         *     &lt;!ELEMENT calendar-home-set (DAV:href*)>
+         *     &lt;!ELEMENT calendar-home-set (DAV:href*)&gt;
          *
          * Example:
          *
          *     &lt;C:calendar-home-set xmlns:D="DAV:"
-         *                            xmlns:C="urn:ietf:params:xml:ns:caldav">
-         *        &lt;D:href>http://cal.example.com/home/bernard/calendars/&lt;/D:href>
-         *     &lt;/C:calendar-home-set>
+         *                            xmlns:C="urn:ietf:params:xml:ns:caldav"&gt;
+         *        &lt;D:href&gt;http://cal.example.com/home/bernard/calendars/&lt;/D:href&gt;
+         *     &lt;/C:calendar-home-set&gt;
          * </pre>
          */
         public final static ElementDescriptor<Set<URI>> CALENDAR_HOME_SET = CalDav.PROPERTY_CALENDAR_HOME_SET;

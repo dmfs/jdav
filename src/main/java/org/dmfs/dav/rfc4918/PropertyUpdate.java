@@ -47,7 +47,7 @@ import java.util.Set;
  * Description:   This XML element is a container for the information
  *    required to modify the properties on the resource.
  *
- * &lt;!ELEMENT propertyupdate (remove | set)+ >
+ * &lt;!ELEMENT propertyupdate (remove | set)+ &gt;
  * </pre>
  */
 public class PropertyUpdate implements Recyclable

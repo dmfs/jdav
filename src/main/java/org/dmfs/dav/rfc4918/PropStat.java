@@ -233,7 +233,7 @@ public class PropStat implements Recyclable
     /**
      * Returns the error element of this propstat element, if there is any.
      *
-     * @return The {@link Error} or <code>null</code> if there was no &lt;error> element.
+     * @return The {@link Error} or <code>null</code> if there was no &lt;error&gt; element.
      */
     public Error getError()
     {

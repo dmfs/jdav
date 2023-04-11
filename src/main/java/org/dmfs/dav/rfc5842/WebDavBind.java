@@ -96,7 +96,7 @@ public final class WebDavBind
          * resources for all time (e.g., the urn:uuid: URN namespace defined in
          * <a href="https://tools.ietf.org/html/rfc4122">[RFC4122]</a> or the opaquelocktoken: URI scheme defined in <a href="https://tools.ietf.org/html/rfc4918">[RFC4918]</a>).
          *
-         * &lt;!ELEMENT resource-id (href)>
+         * &lt;!ELEMENT resource-id (href)&gt;
          * </pre>
          */
         public final static ElementDescriptor<String> RESOURCE_ID = WebDavBind.PROPERTY_RESOURCE_ID;

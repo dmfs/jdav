@@ -49,7 +49,7 @@ import java.io.IOException;
  *
  *       &lt;!ELEMENT calendar-query ((DAV:allprop |
  *                                  DAV:propname |
- *                                  DAV:prop)?, filter, timezone?)>
+ *                                  DAV:prop)?, filter, timezone?)&gt;
  *
  *
  * </pre>
