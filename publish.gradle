@@ -1,0 +1,57 @@
+if (project.hasProperty('SONATYPE_USERNAME') && project.hasProperty('SONATYPE_PASSWORD')) {
+
+    apply plugin: 'maven-publish'
+    apply plugin: 'signing'
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+
+    task sourceJar(type: Jar) {
+        classifier "sources"
+        from sourceSets.main.allJava
+    }
+
+    publishing {
+
+        publications {
+            jar(MavenPublication) {
+                from components.java
+                artifact sourceJar
+                artifact javadocJar
+
+                pom {
+                    name = project.name
+                    description = POM_DESCRIPTION
+                    url = POM_PROJECT_URL
+                    scm {
+                        url = POM_SCM_URL
+                        connection = POM_SCM_CONNECTION
+                        developerConnection = POM_SCM_DEVELOPER_CONNECTION
+                    }
+                    licenses {
+                        license {
+                            name = POM_LICENSE
+                            url = POM_LICENSE_URL
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = POM_DEVELOPER_ID
+                            name = POM_DEVELOPER_NAME
+                            email = POM_DEVELOPER_EMAIL
+                            organization = POM_DEVELOPER_ORGANIZATION
+                            organizationUrl = POM_DEVELOPER_ORGANIZATION_URL
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    signing {
+        useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+        sign publishing.publications
+    }
+}
